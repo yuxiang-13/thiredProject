@@ -27,10 +27,11 @@ void URPGAbilityTask_PMAW::Activate()
 		UAnimInstance* AnimInstance = ActorInfo->GetAnimInstance();
 		
 		if(AnimInstance) {
-			//绑定 结束 回调
+			//绑定 结束 回调，把自己的结束函数绑定好
 			EventHandle = AbilitySystemComponent->AddGameplayEventTagContainerDelegate(
 				FGameplayTagContainer(),
-				FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &URPGAbilityTask_PMAW::OnDamageGameplayEvent));
+				FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &URPGAbilityTask_PMAW::OnDamageGameplayEvent)
+			);
 
 		}
 
@@ -69,16 +70,15 @@ URPGAbilityTask_PMAW* URPGAbilityTask_PMAW::CreatePMAWDamageEventProxy(UGameplay
 	return MyObj;
 }
 
-void URPGAbilityTask_PMAW::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGameplayEventData* Payload)
+void URPGAbilityTask_PMAW::OnDamageGameplayEvent(FGameplayTag InGameplayTag, const FGameplayEventData* Payload)
 {
 	//TASK 执行完了，我需要回调GA告诉GA 你的表现执行完了你可以继续往下走了（表现 蒙太奇执行结束了）
 	// 
-	if (ShouldBroadcastAbilityTaskDelegates())
-		(*Payload).EventTag = InGameplayTag; // 项目信息
+	if (ShouldBroadcastAbilityTaskDelegates()) {
 		FGameplayEventData EventData = *Payload; // 标签
+		EventData.EventTag = InGameplayTag; // 项目信息
 
 		// 广播 回到GA了
-		DamageEventReceived.Broadcast(InGameplayTag,EventData) ;
-	}
-
+		DamageEventReceived.Broadcast(InGameplayTag, EventData);
+	};
 }

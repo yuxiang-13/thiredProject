@@ -37,6 +37,8 @@ public:
 	
 	FGameplayAbilitySpecHandle RegisterGameAbility();
 
+	
+	UFUNCTION(BlueprintCallable)
 	bool ActiveSkill(FName SkillName);
 
 public:

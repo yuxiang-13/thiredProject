@@ -52,24 +52,20 @@ void URPGGameplayAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 	{
 		return;
 	}
-	AThirdProjectCharacter * Character = Cast<AThirdProjectCharacter>(ActorInfo->OwnerActor)
+	AThirdProjectCharacter * Character = Cast<AThirdProjectCharacter>(ActorInfo->OwnerActor);
 	if (Character)
 	{
 		// 成功,播放 蒙太奇
 		if (PlayMontage(*FString::FromInt(0)))
 		{
-			
 		}
 	}
-	
 }
 
-void URPGGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle,
-                                     const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-                                     bool bReplicateEndAbility, bool bWasCancelled)
+// task告诉执行蒙太奇
+UAbilityTask_PlayMontageAndWait* URPGGameplayAbility::PlayMontage(FName StartSection)
 {
-	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
-	
+	return CreatePlayMontageAndWaitProxy(NAME_None, MontageToPlay, 1.0f, StartSection);
 }
 
 // 创建 UAbilityTask
@@ -100,15 +96,19 @@ UAbilityTask_PlayMontageAndWait* URPGGameplayAbility::CreatePlayMontageAndWaitPr
 		//  绑定 task结束的委托
 		InWait->DamageEventReceived.AddDynamic(this, &URPGGameplayAbility::OnDamageGameplayEvent);
 
-		// task创建后了 参数也好了
+		// task创建后了 参数也好了,开始激活task
 		InWait->Activate();
 		return  InWait;
 	}
 	return  NULL;
 }
 
-// task告诉执行蒙太奇
-UAbilityTask_PlayMontageAndWait* URPGGameplayAbility::PlayMontage(FName StartSection)
+
+
+void URPGGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle,
+									 const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
+									 bool bReplicateEndAbility, bool bWasCancelled)
 {
-	return CreatePlayMontageAndWaitProxy(NAME_None, MontageToPlay, 1.0f, StartSection);
+	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
+	
 }
