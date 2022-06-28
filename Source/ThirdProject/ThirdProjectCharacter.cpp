@@ -61,9 +61,19 @@ AThirdProjectCharacter::AThirdProjectCharacter()
 void AThirdProjectCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// 开始注册
-	RegisterGameAbility();
+	if (GetLocalRole() == ENetRole::ROLE_Authority){
+		AbilitySystemComponent->InitAbilityActorInfo(this,this);
+	}
+	//把attributeSet和abilitySystem绑定好
+	
+	// TArray<UAttributeSet*> RPGAttributesets;
+	// RPGAttributesets.Add(RPGAttributeset) ;
+	// AbilitySystemComponent->SetSpawnedAttributes(RPGAttributeSets);
+	// //读表注册能力
+	// if(ARPGGameState* GameState = GetWorld() ->GetGameState<ARPGGameState>()){
+	// 	TArray<UGameplayAbility*> Abilities = GameState->GetCharacterSkills(1);
+		RegisterGameAbility();
+	// }
 }
 
 //////////////////////////////////////////////////////////////////////////

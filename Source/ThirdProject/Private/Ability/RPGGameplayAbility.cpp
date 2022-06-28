@@ -15,21 +15,25 @@ URPGGameplayAbility::URPGGameplayAbility()
 void URPGGameplayAbility::OnCompleted()
 {
 	k2_OnCompleted();
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo,true,false);
 }
 
 void URPGGameplayAbility::OnBlendOut()
 {
 	k2_OnBlendOut();
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo,true,false);
 }
 
 void URPGGameplayAbility::OnInterrupted()
 {
 	k2_OnInterrupted();
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo,true,false);
 }
 
 void URPGGameplayAbility::OnCancelled()
 {
 	k2_OnCancelled();
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo,true,false);
 }
 
 // 接收伤害
