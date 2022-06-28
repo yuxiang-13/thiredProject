@@ -35,16 +35,6 @@ void URPGGameplayAbility::OnCancelled()
 	k2_OnCancelled();
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo,true,false);
 }
-
-// 接收伤害
-void URPGGameplayAbility::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGameplayEventData Payload)
-{
-	// 最后 GA 调用 Attribute
-	UE_LOG(LogTemp, Log, TEXT("- -- ->>>>   "));
-
-	
-}
-
 // 激活某个能力
 void URPGGameplayAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
@@ -115,5 +105,14 @@ void URPGGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle,
 									 bool bReplicateEndAbility, bool bWasCancelled)
 {
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
+	
+}
+
+// 接收伤害
+void URPGGameplayAbility::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGameplayEventData Payload)
+{
+	// 最后 GA 调用 Attribute
+	UE_LOG(LogTemp, Log, TEXT("- -- ->>>>   "));
+
 	
 }
