@@ -36,6 +36,8 @@ void URPGGameplayAbility::OnCancelled()
 void URPGGameplayAbility::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGameplayEventData Payload)
 {
 	// 最后 GA 调用 Attribute
+	UE_LOG(LogTemp, Log, TEXT("- -- ->>>>   "));
+
 	
 }
 
@@ -75,6 +77,7 @@ UAbilityTask_PlayMontageAndWait* URPGGameplayAbility::CreatePlayMontageAndWaitPr
 	UAnimMontage* InMontageToPlay, float Rate, FName StartSection, bool bStopWhenAbilityEnds,
 	float AnimRootMotionTranslationScale, float StartTimeSeconds)
 {
+	// 创建 task
 	URPGAbilityTask_PMAW* InWait = URPGAbilityTask_PMAW::CreatePMAWDamageEventProxy(
 		this,
 		TaskInstanceName,
@@ -94,7 +97,7 @@ UAbilityTask_PlayMontageAndWait* URPGGameplayAbility::CreatePlayMontageAndWaitPr
 		InWait->OnCompleted.AddDynamic(this, &URPGGameplayAbility::OnBlendOut);
 		InWait->OnCompleted.AddDynamic(this, &URPGGameplayAbility::OnInterrupted);
 		InWait->OnCompleted.AddDynamic(this, &URPGGameplayAbility::OnCancelled);
-		// 西药知道 task 执行完毕
+		//  绑定 task结束的委托
 		InWait->DamageEventReceived.AddDynamic(this, &URPGGameplayAbility::OnDamageGameplayEvent);
 
 		// task创建后了 参数也好了

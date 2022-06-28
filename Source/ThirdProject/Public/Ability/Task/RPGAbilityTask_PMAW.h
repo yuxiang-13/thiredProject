@@ -28,7 +28,7 @@ public:
 	// 激活
 	virtual void Activate() override;
 	// 销毁
-	virtual void OnDestroy(bool bInOwnerFinished) override
+	virtual void OnDestroy(bool bInOwnerFinished) override;
 
 	// GA调用这个，让task工作
 	static URPGAbilityTask_PMAW* CreatePMAWDamageEventProxy(
@@ -48,5 +48,11 @@ private:
 	FDelegateHandle EventHandle;
 private:
 	// 由gas通知我task，我task通过代理，告诉ga我结束完了可以执行后续了
-	void OnDamageGameplayEvent(FGameplayTag InGameplayTag, const FGameplayEventData* Payload);
+	void OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGameplayEventData* Payload);
+
+private:
+	// 标签
+	UPROPERTY()
+	FGameplayTagContainer EventTags;
+
 };

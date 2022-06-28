@@ -3,6 +3,7 @@
 
 #include "Ability/Task/RPGAbilityTask_PMAW.h"
 
+#include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
 
 URPGAbilityTask_PMAW::URPGAbilityTask_PMAW()
@@ -11,12 +12,40 @@ URPGAbilityTask_PMAW::URPGAbilityTask_PMAW()
 
 void URPGAbilityTask_PMAW::Activate()
 {
-	Super::Activate();
+	// Super::Activate();
+	
+	//Ability 就是 调用这个的
+	if(Ability == nullptr){
+		return;
+	}
+
+	if (AbilitySystemComponent)
+	{
+		// 获取 施法者 信息
+		const FGameplayAbilityActorInfo* ActorInfo = Ability->GetCurrentActorInfo();
+		// 获取 施法者 动画实例
+		UAnimInstance* AnimInstance = ActorInfo->GetAnimInstance();
+		
+		if(AnimInstance) {
+			//绑定 结束 回调
+			EventHandle = AbilitySystemComponent->AddGameplayEventTagContainerDelegate(
+				FGameplayTagContainer(),
+				FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &URPGAbilityTask_PMAW::OnDamageGameplayEvent));
+
+		}
+
+	}
+
 }
 
 void URPGAbilityTask_PMAW::OnDestroy(bool bInOwnerFinished)
 {
 	Super::OnDestroy(bInOwnerFinished);
+	if (AbilitySystemComponent)
+	{
+		//的把自己的tag移除了
+		AbilitySystemComponent->RemoveGameplayEventTagContainerDelegate(EventTags, EventHandle);
+	}
 }
 
 URPGAbilityTask_PMAW* URPGAbilityTask_PMAW::CreatePMAWDamageEventProxy(UGameplayAbility* OwningAbility,
@@ -25,12 +54,31 @@ URPGAbilityTask_PMAW* URPGAbilityTask_PMAW::CreatePMAWDamageEventProxy(UGameplay
 {
 	// 应用能力
 	UAbilitySystemGlobals::NonShipping_ApplyGlobalAbilityScaler_Rate(Rate);
-	// 创建 能力
-	URPGAbilityTask_PMAWDamageEvent* MyObj = NewAbilityTask<URPGAbilityTask_PMAWDamageEvent>(OwningAbility, TaskInstanceName);
+
+
 	
-	return NULL;
+	// 创建 这个能力
+	URPGAbilityTask_PMAW* MyObj = NewAbilityTask<URPGAbilityTask_PMAW> (OwningAbility, TaskInstanceName);
+	MyObj->MontageToPlay = MontageToPlay;
+	MyObj->Rate = Rate;
+	MyObj->StartSection = StartSection;
+	MyObj->AnimRootMotionTranslationScale = AnimRootMotionTranslationScale;
+	MyObj->bStopWhenAbilityEnds = bStopWhenAbilityEnds;
+	MyObj->StartTimeSeconds = StartTimeSeconnds;
+	MyObj->EventTags = InEventTags;
+	return MyObj;
 }
 
-void URPGAbilityTask_PMAW::OnDamageGameplayEvent(FGameplayTag InGameplayTag, const FGameplayEventData* Payload)
+void URPGAbilityTask_PMAW::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGameplayEventData* Payload)
 {
+	//TASK 执行完了，我需要回调GA告诉GA 你的表现执行完了你可以继续往下走了（表现 蒙太奇执行结束了）
+	// 
+	if (ShouldBroadcastAbilityTaskDelegates())
+		(*Payload).EventTag = InGameplayTag; // 项目信息
+		FGameplayEventData EventData = *Payload; // 标签
+
+		// 广播 回到GA了
+		DamageEventReceived.Broadcast(InGameplayTag,EventData) ;
+	}
+
 }
