@@ -12,7 +12,6 @@ URPGAbilityTask_PMAW::URPGAbilityTask_PMAW()
 
 void URPGAbilityTask_PMAW::Activate()
 {
-	// Super::Activate();
 	
 	//Ability 就是 调用这个的
 	if(Ability == nullptr){
@@ -37,6 +36,7 @@ void URPGAbilityTask_PMAW::Activate()
 
 	}
 
+	Super::Activate();
 }
 
 void URPGAbilityTask_PMAW::OnDestroy(bool bInOwnerFinished)

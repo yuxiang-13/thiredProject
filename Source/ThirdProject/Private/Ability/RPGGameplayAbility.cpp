@@ -47,6 +47,7 @@ void URPGGameplayAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 	const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
+	
 	// 开始执行 能力，失败 直接返回
 	if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
 	{

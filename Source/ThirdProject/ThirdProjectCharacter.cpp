@@ -55,6 +55,15 @@ AThirdProjectCharacter::AThirdProjectCharacter()
 	// 初始化 能力组件
 	AbilitySystemComponent = CreateDefaultSubobject<URPGAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(true);
+
+}
+
+void AThirdProjectCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// 开始注册
+	RegisterGameAbility();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -142,6 +151,11 @@ FGameplayAbilitySpecHandle AThirdProjectCharacter::RegisterGameAbility()
 	{
 		// 添加一个能力 GiveAbility
 		FGameplayAbilitySpecHandle Handle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(GameplayAbilityAbility));
+
+		//也要想角色要角色有这个技能
+		Skills.Add(TEXT("Skill"), Handle) ;
+
+		
 		return Handle;
 	}
 	return FGameplayAbilitySpecHandle();
