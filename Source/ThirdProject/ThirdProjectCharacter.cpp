@@ -49,6 +49,12 @@ AThirdProjectCharacter::AThirdProjectCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+
+	
+	// 初始化 能力组件
+	AbilitySystemComponent = CreateDefaultSubobject<URPGAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+	AbilitySystemComponent->SetIsReplicated(true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -127,3 +133,30 @@ void AThirdProjectCharacter::MoveRight(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
+
+
+// 添加一个能力 GiveAbility
+FGameplayAbilitySpecHandle AThirdProjectCharacter::RegisterGameAbility()
+{
+	if (IsValid(AbilitySystemComponent) && IsValid(GameplayAbilityAbility))
+	{
+		// 添加一个能力 GiveAbility
+		FGameplayAbilitySpecHandle Handle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(GameplayAbilityAbility));
+		return Handle;
+	}
+	return FGameplayAbilitySpecHandle();
+}
+
+// 激活一个能力 GiveAbility
+bool AThirdProjectCharacter::ActiveSkill(FName SkillName)
+{
+	if (IsValid(AbilitySystemComponent))
+	{
+		if (const FGameplayAbilitySpecHandle* Handle = Skills.Find(SkillName))
+		{
+			return AbilitySystemComponent->TryActivateAbility(*Handle);
+		}
+	}
+	return false;
+}
+

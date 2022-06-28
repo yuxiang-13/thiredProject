@@ -7,11 +7,16 @@
 #include "RPGAbilitySystemComponent.generated.h"
 
 /**
- * 
- */
+* AbilitySystemComponent（ASC）
+技能系统组件AbilitySystemComponent是整个GAS的核心，用于管理各种技能和处理
+
+*/
+
 UCLASS()
-class THIRDPROJECT_API URPGAbilitySystemComponent : public UAbilitySystemComponent
+class URPGAbilitySystemComponent: public UAbilitySystemComponent
 {
 	GENERATED_BODY()
 	
 };
+
+
