@@ -9,6 +9,14 @@ UMyAttributeSet::UMyAttributeSet(): Health(100.f)
 {
 }
 
+void UMyAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
+{
+	Super::PostGameplayEffectExecute(Data);
+	
+
+	
+}
+
 void UMyAttributeSet::OnRep_Health(const FGameplayAttributeData& OldValue)
 {
 	// 调用GAMEPLAYATTRIBUTE_REPNOTIFY 宏才能使用预测系统

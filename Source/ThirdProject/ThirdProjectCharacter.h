@@ -29,6 +29,11 @@ private:
 	class URPGAbilitySystemComponent* AbilitySystemComponent;
 
 	TMap<FName, FGameplayAbilitySpecHandle> Skills;
+
+	// 属性
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
+	class UMyAttributeSet* RPGAttributeSet;
+	
 	
 public:
 	//2 能力
