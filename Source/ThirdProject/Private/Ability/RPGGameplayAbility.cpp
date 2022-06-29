@@ -42,11 +42,18 @@ void URPGGameplayAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	
-	// 开始执行 能力,失败 直接返回
-	if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
+	// // 开始执行 能力,失败 直接返回
+	// if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
+	// {
+	// 	return;
+	// }
+
+	// 强制冷却
+	if (!CommitAbilityCooldown(Handle, ActorInfo, ActivationInfo, true))
 	{
 		return;
 	}
+	
 	AThirdProjectCharacter * Character = Cast<AThirdProjectCharacter>(ActorInfo->OwnerActor);
 	if (Character)
 	{

@@ -17,16 +17,24 @@ class THIRDPROJECT_API UMyAttributeSet : public UAttributeSet
 	GENERATED_BODY()
 public:
 	UMyAttributeSet();
-
+	
+	// 血
 	UPROPERTY(BlueprintReadOnly, Category = "Attribute", ReplicatedUsing = OnRep_Health)
 		FGameplayAttributeData Health;
 	PROPERTY_FUNCTION_REGISTRATION(UMyAttributeSet, Health)
 
+	// 蓝
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute", ReplicatedUsing = OnRep_Mana)
+		FGameplayAttributeData Mana;
+	PROPERTY_FUNCTION_REGISTRATION(UMyAttributeSet, Mana)
 	
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data) override;
 protected:
 	UFUNCTION()
 	virtual void OnRep_Health(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
+	virtual void OnRep_Mana(const FGameplayAttributeData& OldValue);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

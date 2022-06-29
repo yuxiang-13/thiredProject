@@ -6,7 +6,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Net/UnrealNetwork.h"
 
-UMyAttributeSet::UMyAttributeSet(): Health(100.f)
+UMyAttributeSet::UMyAttributeSet(): Health(100.f), Mana(50.f)
 {
 }
 
@@ -25,9 +25,15 @@ void UMyAttributeSet::OnRep_Health(const FGameplayAttributeData& OldValue)
 
 }
 
+void UMyAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMyAttributeSet, Mana, OldValue);
+}
+
 void UMyAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	
 	DOREPLIFETIME(UMyAttributeSet, Health);
+	DOREPLIFETIME(UMyAttributeSet, Mana);
 }
