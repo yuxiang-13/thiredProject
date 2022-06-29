@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{14BBA157-4B57-D819-5D0B-098894A2868D}",
+	"EngineAssociation": "{F296358A-4526-B498-DAF9-2C8DF597246F}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -9,7 +9,8 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"GameplayAbilities"
+				"GameplayAbilities",
+				"Engine"
 			]
 		}
 	],

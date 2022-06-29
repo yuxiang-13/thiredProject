@@ -9,6 +9,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GamePlay/RPGGameState.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AThirdProjectCharacter
@@ -159,36 +160,41 @@ void AThirdProjectCharacter::BeginPlay()
 	AbilitySystemComponent->SetSpawnedAttributes(RPGAttributeSets);
 
 	
-	// //读表注册能力
-	// if(ARPGGameState* GameState = GetWorld() ->GetGameState<ARPGGameState>()){
-	// 	TArray<UGameplayAbility*> Abilities = GameState->GetCharacterSkills(1);
-	// }
+	//读表注册能力
+	if(ARPGGameState* GameState = GetWorld()->GetGameState<ARPGGameState>()){
+		TArray<UGameplayAbility*> Abilities = GameState->GetCharacterSkills(1);
+	}
 }
 
 // 添加一个能力 GiveAbility
 FGameplayAbilitySpecHandle AThirdProjectCharacter::RegisterGameAbility()
 {
-	if (IsValid(AbilitySystemComponent) && IsValid(GameplayAbilityAbility) && IsValid(InGameplayAbility2))
+	if (GetLocalRole() == ROLE_Authority)
 	{
-		// 添加一个能力 GiveAbility
-		FGameplayAbilitySpecHandle Handle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(GameplayAbilityAbility));
+		if (IsValid(AbilitySystemComponent) && IsValid(GameplayAbilityAbility) && IsValid(InGameplayAbility2))
+		{
+			// 向GAS系统 添加一个能力 GiveAbility 拿到 handle
+			FGameplayAbilitySpecHandle Handle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(GameplayAbilityAbility));
+			// 拿到技能tag
+			const FString string = Cast<UGameplayAbility>(GameplayAbilityAbility.GetDefaultObject())->AbilityTags.ToStringSimple();
+			//转成 fName 存到 map内
+			Skills.Add(FName(string), Handle) ;
 
-		//也要想角色要角色有这个技能
-		Skills.Add(TEXT("MagicAttack"), Handle) ;
-
-		// 添加一个能力 GiveAbility
-		FGameplayAbilitySpecHandle Handle2 = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(InGameplayAbility2));
-		Skills.Add(TEXT("Cast"), Handle2) ;
+			// 添加一个能力 GiveAbility
+			FGameplayAbilitySpecHandle Handle2 = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(InGameplayAbility2));
+			const FString string2 = Cast<UGameplayAbility>(InGameplayAbility2.GetDefaultObject())->AbilityTags.ToStringSimple();
+			Skills.Add(FName(string2), Handle2) ;
+		}
 	}
 	return FGameplayAbilitySpecHandle();
 }
 
 // 激活一个能力 GiveAbility
-bool AThirdProjectCharacter::ActiveSkill(FName SkillName)
+bool AThirdProjectCharacter::ActiveSkill(FGameplayTag SkillName)
 {
 	if (IsValid(AbilitySystemComponent))
 	{
-		if (const FGameplayAbilitySpecHandle* Handle = Skills.Find(SkillName))
+		if (const FGameplayAbilitySpecHandle* Handle = Skills.Find(FName(*SkillName.ToString())))
 		{
 			return AbilitySystemComponent->TryActivateAbility(*Handle);
 		}

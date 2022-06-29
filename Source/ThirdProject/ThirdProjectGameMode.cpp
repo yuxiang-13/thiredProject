@@ -2,6 +2,7 @@
 
 #include "ThirdProjectGameMode.h"
 #include "ThirdProjectCharacter.h"
+#include "GamePlay/RPGGameState.h"
 #include "UObject/ConstructorHelpers.h"
 
 AThirdProjectGameMode::AThirdProjectGameMode()
@@ -12,4 +13,6 @@ AThirdProjectGameMode::AThirdProjectGameMode()
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
+	
+	GameStateClass = ARPGGameState::StaticClass();
 }

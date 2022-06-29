@@ -49,7 +49,7 @@ public:
 
 	
 	UFUNCTION(BlueprintCallable)
-	bool ActiveSkill(FName SkillName);
+	bool ActiveSkill(FGameplayTag SkillName);
 
 public:
 	AThirdProjectCharacter();
