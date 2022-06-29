@@ -34,6 +34,8 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
 	class UMyAttributeSet* RPGAttributeSet;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
+	class UGameplayAbility* InGameplayAbility2;
 	
 public:
 	//2 能力
