@@ -42,7 +42,7 @@ void URPGGameplayAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	
-	// 开始执行 能力，失败 直接返回
+	// 开始执行 能力,失败 直接返回
 	if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
 	{
 		return;
@@ -113,6 +113,49 @@ void URPGGameplayAbility::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGam
 {
 	// 最后 GA 调用 Attribute
 	UE_LOG(LogTemp, Log, TEXT("- -- ->>>>   "));
-
 	
+	//先创建—个目标数组
+	FGameplayAbilityTargetData_ActorArray* NewTargetData_Actorlrray = new FGameplayAbilityTargetData_ActorArray();
+	//把我们的命中传递过来的数据中的目标添进数组
+	NewTargetData_Actorlrray->TargetActorArray.Add(const_cast<AActor*>(Payload.Instigator));
+	
+	//创建目标数据的handle
+	FGameplayAbilityTargetDataHandle TargetHandleData;
+	//把我们的数据添加到处理目标数据的handle里面
+	TargetHandleData.Add(NewTargetData_Actorlrray);
+	
+	
+	//1 创建GE handle
+	// 从所有激活的GE 遍历（find 找对应GA激活的GE,这里全部激活）
+	for (auto &Tmp: EffectMap)
+	{
+		//1 创建GE Handle
+			//拿到我们的 GAs系统组件(通过GA的激活信息)
+			//创建GE的实例, GE本体, GE的等级, GE的上下文信息
+		FGameplayEffectSpecHandle NewGEHandle = GetAbilitySystemComponentFromActorInfo()->MakeOutgoingSpec(
+			Tmp.Value,
+			1,
+			MakeEffectContext(CurrentSpecHandle, CurrentActorInfo)
+		);
+		
+		//2 GEHandle创建成功
+		if(NewGEHandle.IsValid())
+		{
+			// 找到 GA 的实例 （通过 GA 的 Handle 获取 GA 的实例）
+			FGameplayAbilitySpec* AbilitySpec = GetAbilitySystemComponentFromActorInfo()->FindAbilitySpecFromHandle(CurrentSpecHandle);
+			
+			
+			//3 把GA捕获的信息，应用到GE上
+			ApplyAbilityTagsToGameplayEffectSpec(*NewGEHandle.Data.Get(), AbilitySpec);
+		
+			if(AbilitySpec)
+			{
+				NewGEHandle.Data->SetByCallerTagMagnitudes = AbilitySpec->SetByCallerTagMagnitudes;
+			}
+		}
+	
+	
+		// 蓝图函数    这块触发了  属性的 UMyAttributeSet::PostGameplayEffectExecute
+		TArray<FActiveGameplayEffectHandle> ActiveGameplayEffectHandle = K2_ApplyGameplayEffectSpecToTarget(NewGEHandle, TargetHandleData);
+	}
 }
