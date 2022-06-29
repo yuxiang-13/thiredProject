@@ -28,7 +28,7 @@ void URPGAbilityTask_PMAW::Activate()
 		if(AnimInstance) {
 			//绑定 结束 回调，把自己的结束函数绑定好
 			EventHandle = AbilitySystemComponent->AddGameplayEventTagContainerDelegate(
-				FGameplayTagContainer(),
+				EventTags,
 				FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &URPGAbilityTask_PMAW::OnDamageGameplayEvent)
 			);
 
