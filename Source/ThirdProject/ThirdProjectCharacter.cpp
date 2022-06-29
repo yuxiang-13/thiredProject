@@ -149,7 +149,6 @@ void AThirdProjectCharacter::BeginPlay()
 	if (GetLocalRole() == ENetRole::ROLE_Authority){
 		AbilitySystemComponent->InitAbilityActorInfo(this,this);
 	}
-	RegisterGameAbility();
 
 	
 	// 把attributeSet和abilitySystem绑定好
@@ -163,27 +162,26 @@ void AThirdProjectCharacter::BeginPlay()
 	//读表注册能力
 	if(ARPGGameState* GameState = GetWorld()->GetGameState<ARPGGameState>()){
 		TArray<UGameplayAbility*> Abilities = GameState->GetCharacterSkills(1);
+		RegisterGameAbility(Abilities);
 	}
 }
 
 // 添加一个能力 GiveAbility
-FGameplayAbilitySpecHandle AThirdProjectCharacter::RegisterGameAbility()
+FGameplayAbilitySpecHandle AThirdProjectCharacter::RegisterGameAbility(TArray<UGameplayAbility*> InAbilites)
 {
 	if (GetLocalRole() == ROLE_Authority)
 	{
-		if (IsValid(AbilitySystemComponent) && IsValid(GameplayAbilityAbility) && IsValid(InGameplayAbility2))
+		if (IsValid(AbilitySystemComponent) && InAbilites.Num() > 0)
 		{
-			// 向GAS系统 添加一个能力 GiveAbility 拿到 handle
-			FGameplayAbilitySpecHandle Handle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(GameplayAbilityAbility));
-			// 拿到技能tag
-			const FString string = Cast<UGameplayAbility>(GameplayAbilityAbility.GetDefaultObject())->AbilityTags.ToStringSimple();
-			//转成 fName 存到 map内
-			Skills.Add(FName(string), Handle) ;
-
-			// 添加一个能力 GiveAbility
-			FGameplayAbilitySpecHandle Handle2 = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(InGameplayAbility2));
-			const FString string2 = Cast<UGameplayAbility>(InGameplayAbility2.GetDefaultObject())->AbilityTags.ToStringSimple();
-			Skills.Add(FName(string2), Handle2) ;
+			for(auto &Temp: InAbilites)
+			{
+				// 向GAS系统 添加一个能力 GiveAbility 拿到 handle
+				FGameplayAbilitySpecHandle Handle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Temp));
+				// 拿到技能tag
+				const FString string = Temp->AbilityTags.ToStringSimple();
+				//转成 fName 存到 map内
+				Skills.Add(FName(string), Handle) ;
+			}
 		}
 	}
 	return FGameplayAbilitySpecHandle();

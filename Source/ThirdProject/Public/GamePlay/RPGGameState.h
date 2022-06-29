@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "DataTable/SkillDataTable.h"
 #include "GameFramework/GameStateBase.h"
 #include "RPGGameState.generated.h"
 
 
-class FSkillDataTable;
 class UGameplayAbility;
 /**
  * 

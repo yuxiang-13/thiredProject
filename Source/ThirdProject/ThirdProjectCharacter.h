@@ -36,16 +36,16 @@ private:
 
 	
 public:
-	//2 能力
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS")
-	TSubclassOf<class UGameplayAbility> GameplayAbilityAbility;
-	
-	// 能力3
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS")
-	TSubclassOf<class UGameplayAbility> InGameplayAbility2;
+	// //2 能力
+	// UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS")
+	// TSubclassOf<class UGameplayAbility> GameplayAbilityAbility;
+	//
+	// // 能力3
+	// UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS")
+	// TSubclassOf<class UGameplayAbility> InGameplayAbility2;
 
 	
-	FGameplayAbilitySpecHandle RegisterGameAbility();
+	FGameplayAbilitySpecHandle RegisterGameAbility(TArray<UGameplayAbility*> InAbilites);
 
 	
 	UFUNCTION(BlueprintCallable)

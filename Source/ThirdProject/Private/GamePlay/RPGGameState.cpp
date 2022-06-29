@@ -12,6 +12,8 @@ ARPGGameState::ARPGGameState()
 	if (SkillDataTable.Object)
 	{
 		SkillDataPtr = SkillDataTable.Object;
+
+		GetCharacterSkillTables();
 	}
 }
 
@@ -25,7 +27,7 @@ TArray<UGameplayAbility*> ARPGGameState::GetCharacterSkills(int32 InCharacterID)
 		{
 			if (Tmp->CharacterID == InCharacterID)
 			{
-				UGameplayAbility* NewAbility = Cast<UGameplayAbility>(Tmp->GameplayAbility);
+				UGameplayAbility* NewAbility = Cast<UGameplayAbility>(Tmp->GameplayAbility.GetDefaultObject());
 				Skills.Add(NewAbility);
 			}
 		}
