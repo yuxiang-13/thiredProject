@@ -41,8 +41,8 @@ public:
 	TSubclassOf<class UGameplayAbility> GameplayAbilityAbility;
 	
 	// 能力3
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
-	class UGameplayAbility* InGameplayAbility2;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS")
+	TSubclassOf<class UGameplayAbility> InGameplayAbility2;
 
 	
 	FGameplayAbilitySpecHandle RegisterGameAbility();

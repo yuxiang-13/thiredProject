@@ -168,7 +168,7 @@ void AThirdProjectCharacter::BeginPlay()
 // 添加一个能力 GiveAbility
 FGameplayAbilitySpecHandle AThirdProjectCharacter::RegisterGameAbility()
 {
-	if (IsValid(AbilitySystemComponent) && IsValid(GameplayAbilityAbility))
+	if (IsValid(AbilitySystemComponent) && IsValid(GameplayAbilityAbility) && IsValid(InGameplayAbility2))
 	{
 		// 添加一个能力 GiveAbility
 		FGameplayAbilitySpecHandle Handle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(GameplayAbilityAbility));
