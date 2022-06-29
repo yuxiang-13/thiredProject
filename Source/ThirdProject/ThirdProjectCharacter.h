@@ -33,14 +33,17 @@ private:
 	// 属性
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
 	class UMyAttributeSet* RPGAttributeSet;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
-	class UGameplayAbility* InGameplayAbility2;
+
 	
 public:
 	//2 能力
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS")
 	TSubclassOf<class UGameplayAbility> GameplayAbilityAbility;
+	
+	// 能力3
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
+	class UGameplayAbility* InGameplayAbility2;
+
 	
 	FGameplayAbilitySpecHandle RegisterGameAbility();
 

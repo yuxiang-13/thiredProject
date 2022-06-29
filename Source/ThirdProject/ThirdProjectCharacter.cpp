@@ -174,10 +174,11 @@ FGameplayAbilitySpecHandle AThirdProjectCharacter::RegisterGameAbility()
 		FGameplayAbilitySpecHandle Handle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(GameplayAbilityAbility));
 
 		//也要想角色要角色有这个技能
-		Skills.Add(TEXT("Skill"), Handle) ;
+		Skills.Add(TEXT("MagicAttack"), Handle) ;
 
-		
-		return Handle;
+		// 添加一个能力 GiveAbility
+		FGameplayAbilitySpecHandle Handle2 = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(InGameplayAbility2));
+		Skills.Add(TEXT("Cast"), Handle2) ;
 	}
 	return FGameplayAbilitySpecHandle();
 }
