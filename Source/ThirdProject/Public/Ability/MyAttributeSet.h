@@ -23,6 +23,12 @@ public:
 		FGameplayAttributeData Health;
 	PROPERTY_FUNCTION_REGISTRATION(UMyAttributeSet, Health)
 
+	
+	// 最大血
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute", ReplicatedUsing = OnRep_MaxHealth)
+		FGameplayAttributeData MaxHealth;
+	PROPERTY_FUNCTION_REGISTRATION(UMyAttributeSet, MaxHealth)
+
 	// 蓝
 	UPROPERTY(BlueprintReadOnly, Category = "Attribute", ReplicatedUsing = OnRep_Mana)
 		FGameplayAttributeData Mana;
@@ -35,6 +41,9 @@ protected:
 	
 	UFUNCTION()
 	virtual void OnRep_Mana(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
+	virtual void OnRep_MaxHealth(const FGameplayAttributeData& OldValue);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

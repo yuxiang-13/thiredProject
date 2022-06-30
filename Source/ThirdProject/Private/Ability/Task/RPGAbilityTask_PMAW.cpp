@@ -26,7 +26,7 @@ void URPGAbilityTask_PMAW::Activate()
 		UAnimInstance* AnimInstance = ActorInfo->GetAnimInstance();
 		
 		if(AnimInstance) {
-			//绑定 结束 回调，把自己的结束函数绑定好
+			//绑定 承伤 代理
 			EventHandle = AbilitySystemComponent->AddGameplayEventTagContainerDelegate(
 				EventTags,
 				FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &URPGAbilityTask_PMAW::OnDamageGameplayEvent)

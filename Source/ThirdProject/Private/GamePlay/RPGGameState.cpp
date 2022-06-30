@@ -42,7 +42,7 @@ TArray<FSkillDataTable*> ARPGGameState::GetCharacterSkillTables()
 	{
 		SkillDataTables.Empty();
 		// 把 蓝图中DataTable 数据读取出来
-		SkillDataPtr->GetAllRows(TEXT("SkillTable"), SkillDataTables);
+		SkillDataPtr->GetAllRows(TEXT("Load SkillData Miss"), SkillDataTables);
 	}
-	return  TArray<FSkillDataTable*>();
+	return SkillDataTables;
 }

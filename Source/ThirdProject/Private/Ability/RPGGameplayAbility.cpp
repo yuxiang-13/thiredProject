@@ -162,7 +162,7 @@ void URPGGameplayAbility::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGam
 		}
 	
 	
-		// 蓝图函数    这块触发了  属性的 UMyAttributeSet::PostGameplayEffectExecute
+		// 这块触发了  属性的 UMyAttributeSet::PostGameplayEffectExecute
 		TArray<FActiveGameplayEffectHandle> ActiveGameplayEffectHandle = K2_ApplyGameplayEffectSpecToTarget(NewGEHandle, TargetHandleData);
 	}
 }

@@ -55,12 +55,6 @@ AThirdProjectCharacter::AThirdProjectCharacter()
 
 
 	
-	// 初始化 能力组件
-	AbilitySystemComponent = CreateDefaultSubobject<URPGAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
-	AbilitySystemComponent->SetIsReplicated(true);
-
-
-	RPGAttributeSet = CreateDefaultSubobject<UMyAttributeSet>(TEXT("RPGAttributeSet"));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -152,11 +146,6 @@ void AThirdProjectCharacter::BeginPlay()
 
 	
 	// 把attributeSet和abilitySystem绑定好
-
-	// 构建 属性数组,把 属性类塞进去
-	TArray<UAttributeSet*> RPGAttributeSets;
-	RPGAttributeSets.Add(RPGAttributeSet) ;
-	AbilitySystemComponent->SetSpawnedAttributes(RPGAttributeSets);
 
 	
 	//读表注册能力

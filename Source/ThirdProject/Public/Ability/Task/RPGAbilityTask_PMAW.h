@@ -47,7 +47,7 @@ private:
 	// 自身 handle
 	FDelegateHandle EventHandle;
 private:
-	// 由gas通知我task，我task通过代理，告诉ga我结束完了可以执行后续了
+	// 由gas通知我task，我task通过代理，告诉 GA 我结束完了可以执行后续了
 	void OnDamageGameplayEvent(FGameplayTag InGameplayTag,const FGameplayEventData* Payload);
 	
 private:

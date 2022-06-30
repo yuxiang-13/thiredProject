@@ -5,11 +5,12 @@
 #include "CoreMinimal.h"
 #include "Ability/RPGAbilitySystemComponent.h"
 #include "Ability/RPGGameplayAbility.h"
+#include "Character/Core/PGCharacterBase.h"
 #include "GameFramework/Character.h"
 #include "ThirdProjectCharacter.generated.h"
 
 UCLASS(config=Game)
-class AThirdProjectCharacter : public ACharacter
+class AThirdProjectCharacter : public APGCharacterBase
 {
 	GENERATED_BODY()
 
@@ -23,16 +24,6 @@ class AThirdProjectCharacter : public ACharacter
 
 
 
-private:
-	//1 引入 GAS
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
-	class URPGAbilitySystemComponent* AbilitySystemComponent;
-
-	TMap<FName, FGameplayAbilitySpecHandle> Skills;
-
-	// 属性
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
-	class UMyAttributeSet* RPGAttributeSet;
 
 	
 public:
