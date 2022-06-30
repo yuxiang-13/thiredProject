@@ -48,6 +48,7 @@ void APGCharacterBase::BeginPlay()
 	RPGAttributeSets.Add(RPGAttributeSet) ;
 	AbilitySystemComponent->SetSpawnedAttributes(RPGAttributeSets);
 
+	HandleHealthChanged(RPGAttributeSet->GetHealth() / RPGAttributeSet->GetMaxHealth());
 }
 
 // Called every frame

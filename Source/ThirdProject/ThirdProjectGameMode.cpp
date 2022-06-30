@@ -3,6 +3,8 @@
 #include "ThirdProjectGameMode.h"
 #include "ThirdProjectCharacter.h"
 #include "GamePlay/RPGGameState.h"
+#include "GamePlay/RPGHUD.h"
+#include "GamePlay/RPGPlayerState.h"
 #include "UObject/ConstructorHelpers.h"
 
 AThirdProjectGameMode::AThirdProjectGameMode()
@@ -15,4 +17,8 @@ AThirdProjectGameMode::AThirdProjectGameMode()
 	}
 	
 	GameStateClass = ARPGGameState::StaticClass();
+
+	HUDClass = ARPGHUD::StaticClass();
+
+	PlayerStateClass = ARPGPlayerState::StaticClass();
 }

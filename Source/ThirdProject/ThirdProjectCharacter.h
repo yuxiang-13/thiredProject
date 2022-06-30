@@ -9,6 +9,8 @@
 #include "GameFramework/Character.h"
 #include "ThirdProjectCharacter.generated.h"
 
+DECLARE_DELEGATE_OneParam(FUpdateProqressstate, float)
+
 UCLASS(config=Game)
 class AThirdProjectCharacter : public APGCharacterBase
 {
