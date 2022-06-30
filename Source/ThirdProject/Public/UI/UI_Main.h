@@ -21,7 +21,12 @@ public:
 	UPROPERTY(meta=(BindWidget))
 		class UProgressBar* stamina;
 public:
-	UUI_Main();
+	UUI_Main(const FObjectInitializer& ObjectInitializer);
+
+	
+	virtual void NativeConstruct() override;
+	virtual void NativeDestruct() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 protected:
 	UFUNCTION()
 		void UpdateHealthProgress(float InPercent);
@@ -29,4 +34,6 @@ protected:
 		void UpdateManaProgress(float InPercent);
 	UFUNCTION()
 		void UpdateStaminaProgress(float InPercent);
+private:
+	float TargetHealth;
 };

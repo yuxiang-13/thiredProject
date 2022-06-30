@@ -4,15 +4,42 @@
 #include "UI/UI_Main.h"
 
 #include "Components/ProgressBar.h"
+#include "ThirdProject/ThirdProjectCharacter.h"
 
-UUI_Main::UUI_Main()
+UUI_Main::UUI_Main(const FObjectInitializer& ObjectInitializer):Super(ObjectInitializer), TargetHealth(1.0f)
 {
+}
+
+void UUI_Main::NativeConstruct()
+{
+	Super::NativeConstruct();
+
+	if (AThirdProjectCharacter* PlayerCharacter = Cast<AThirdProjectCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn()))
+	{
+		PlayerCharacter->UpdateHealthProgress.BindUObject(this, &UUI_Main::UpdateHealthProgress);
+		PlayerCharacter->UpdateManaProgress.BindUObject(this, &UUI_Main::UpdateManaProgress);
+		PlayerCharacter->UpdateStanProgress.BindUObject(this, &UUI_Main::UpdateStaminaProgress);
+	}
+
+}
+
+void UUI_Main::NativeDestruct()
+{
+	Super::NativeDestruct();
+}
+
+void UUI_Main::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
+{
+	Super::NativeTick(MyGeometry, InDeltaTime);
 }
 
 void UUI_Main::UpdateHealthProgress(float InPercent)
 {
-	Health->SetPercent(InPercent);
+	// Health->SetPercent(InPercent);
+	TargetHealth = InPercent;
+	
 }
+
 
 void UUI_Main::UpdateManaProgress(float InPercent)
 {

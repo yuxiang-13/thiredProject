@@ -34,6 +34,7 @@
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN
 "C:\Users\helloword\Music\project\thried\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderLogging\Module.RiderLogging.cpp.obj"
+"C:\Users\helloword\Music\project\thried\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RiderLogging\RiderLogging.cpp.obj"
 "..\Intermediate\Build\Win64\UnrealEditor\Development\Default.rc2.res"
 "..\Intermediate\Build\Win64\UnrealEditor\Development\Core\UnrealEditor-Core.lib"
 "C:\Users\helloword\Music\project\thried\Plugins\Developer\RiderLink\Intermediate\Build\Win64\UnrealEditor\DebugGame\RD\UnrealEditor-RD-Win64-DebugGame.lib"
