@@ -31,6 +31,12 @@ void UUI_Main::NativeDestruct()
 void UUI_Main::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
+	// 近似不相等
+	if (Health && !FMath::IsNearlyEqual(TargetHealth,Health->Percent))
+	{
+		double fInterpTo = FMath::FInterpTo(Health->Percent, TargetHealth, InDeltaTime, 3.0);
+		Health->SetPercent (fInterpTo);
+	}
 }
 
 void UUI_Main::UpdateHealthProgress(float InPercent)
