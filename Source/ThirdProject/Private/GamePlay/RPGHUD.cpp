@@ -23,4 +23,8 @@ ARPGHUD::ARPGHUD()
 {
 	static ConstructorHelpers::FClassFinder<UUI_Main> GameMain_BPClass(TEXT("WidgetBlueprint'/Game/UI/Game/BP_MainUI.BP_MainUI_C'"));
 	GameMainclass = GameMain_BPClass.Class;
+
+	
+	static ConstructorHelpers::FClassFinder<AActor> DemageNumber_BPclass(TEXT("Blueprint'/Game/UI/Damage/BP_DamageActor.BP_DamageActor_C'"));
+	DemageNumberclass = DemageNumber_BPclass.Class;
 }

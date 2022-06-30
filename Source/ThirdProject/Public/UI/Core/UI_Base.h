@@ -13,4 +13,8 @@ UCLASS()
 class THIRDPROJECT_API UUI_Base : public UUserWidget
 {
 	GENERATED_BODY()
+public:
+	void PlayWidgetAnim(const FString& InAnimName);
+	UWidgetAnimation* GetNameWidgetAnimation(const FString& InWigetName);
+
 };

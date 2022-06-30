@@ -16,13 +16,17 @@ class THIRDPROJECT_API ARPGHUD : public AHUD
 	GENERATED_BODY()
 
 public:
-	UPROPERTY()
-	TSubclassOf<UUI_Main> GameMainclass;
-
-private:
-	class UUI_Main* GameMain;
-public:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	ARPGHUD();
+	
+public:
+	UPROPERTY()
+	TSubclassOf<class UUI_Main> GameMainclass;
+
+	UPROPERTY()
+	TSubclassOf<class AActor> DemageNumberclass;
+
+private:
+	class UUI_Main* GameMain;
 };
