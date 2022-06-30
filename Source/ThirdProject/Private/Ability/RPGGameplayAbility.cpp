@@ -123,8 +123,8 @@ void URPGGameplayAbility::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGam
 	
 	//先创建—个目标数组
 	FGameplayAbilityTargetData_ActorArray* NewTargetData_Actorlrray = new FGameplayAbilityTargetData_ActorArray();
-	//把我们的命中传递过来的数据中的目标添进数组
-	NewTargetData_Actorlrray->TargetActorArray.Add(const_cast<AActor*>(Payload.Instigator));
+	//把我们的命中传递过来的数据中的目标添进数组   // Payload.Instigator 是技能发起者   Payload.Target 是承受者
+	NewTargetData_Actorlrray->TargetActorArray.Add(const_cast<AActor*>(Payload.Target));
 	
 	//创建目标数据的handle
 	FGameplayAbilityTargetDataHandle TargetHandleData;

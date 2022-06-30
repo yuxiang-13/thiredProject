@@ -25,6 +25,6 @@ struct FSkillDataTable: public FTableRowBase
 		class UTexture2D* Icon;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Characterskill")
-	TSubclassOf<class UGameplayAbility> GameplayAbility;
+		TSubclassOf<class UGameplayAbility> GameplayAbility;
 
 };
