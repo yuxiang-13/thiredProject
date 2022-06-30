@@ -18,7 +18,7 @@ public:
 	// Sets default values for this character's properties
 	APGCharacterBase();
 
-	void HandleHealthChanged(float InHealthPercent);
+	virtual void HandleHealthChanged(float InHealthPercent) ;
 	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

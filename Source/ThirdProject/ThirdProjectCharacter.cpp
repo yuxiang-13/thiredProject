@@ -153,6 +153,12 @@ void AThirdProjectCharacter::BeginPlay()
 		TArray<UGameplayAbility*> Abilities = GameState->GetCharacterSkills(1);
 		RegisterGameAbility(Abilities);
 	}
+
+
+	// 更新面板
+	UpdateHealth(1);
+	UpdateMana(1);
+	UpdateStan(1);
 }
 
 // 添加一个能力 GiveAbility
@@ -187,5 +193,27 @@ bool AThirdProjectCharacter::ActiveSkill(FGameplayTag SkillName)
 		}
 	}
 	return false;
+}
+
+void AThirdProjectCharacter::HandleHealthChanged(float InHealthPercent)
+{
+	Super::HandleHealthChanged(InHealthPercent);
+
+	UpdateHealth(InHealthPercent);
+}
+
+void AThirdProjectCharacter::UpdateHealth(float Num)
+{
+	UpdateHealthProgress.ExecuteIfBound(Num);
+}
+
+void AThirdProjectCharacter::UpdateMana(float Num)
+{
+	UpdateManaProgress.ExecuteIfBound(Num);
+}
+
+void AThirdProjectCharacter::UpdateStan(float Num)
+{
+	UpdateStanProgress.ExecuteIfBound(Num);
 }
 

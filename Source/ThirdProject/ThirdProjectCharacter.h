@@ -24,10 +24,6 @@ class AThirdProjectCharacter : public APGCharacterBase
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 
-
-
-
-	
 public:
 	// //2 能力
 	// UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS")
@@ -37,6 +33,10 @@ public:
 	// UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS")
 	// TSubclassOf<class UGameplayAbility> InGameplayAbility2;
 
+	// 绑定给 MainUI 的代理
+	FUpdateProqressstate UpdateHealthProgress;
+	FUpdateProqressstate UpdateManaProgress;
+	FUpdateProqressstate UpdateStanProgress;
 	
 	FGameplayAbilitySpecHandle RegisterGameAbility(TArray<UGameplayAbility*> InAbilites);
 
@@ -45,6 +45,12 @@ public:
 	bool ActiveSkill(FGameplayTag SkillName);
 
 public:
+	void HandleHealthChanged(float InHealthPercent) override;
+
+	void UpdateHealth(float Num);
+	void UpdateMana(float Num);
+	void UpdateStan(float Num);
+	
 	AThirdProjectCharacter();
 
 	void BeginPlay() override;
