@@ -123,6 +123,8 @@ public:
 	void ActiveSkill(FGameplayTag SkillName);
 	void ActiveSkill(FString SkillName);
 
+	void PlayHit();
+	
 	// combo连击
 	void ComboAttackOnPressed();
 	void ComboAttackOnReleased();

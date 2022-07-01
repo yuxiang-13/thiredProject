@@ -55,6 +55,8 @@ public:
 		void ActiveSkill(FGameplayTag SkillName);
 	UFUNCTION(BlueprintCallable)
 		void ActiveSkillByString(const FString& SkillName);
+
+	void PlayHit();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

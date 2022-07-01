@@ -104,3 +104,8 @@ void APGCharacterBase::ActiveSkillByString(const FString& SkillName)
 {
 	FightComponent->ActiveSkill(SkillName);
 }
+
+void APGCharacterBase::PlayHit()
+{
+	GetFightComponent()->PlayHit();
+}
