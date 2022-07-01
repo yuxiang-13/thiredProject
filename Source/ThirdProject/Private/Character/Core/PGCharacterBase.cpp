@@ -83,7 +83,7 @@ UFight1Component* APGCharacterBase::GetFightComponent()
 	return FightComponent;
 }
 
-void APGCharacterBase::ActiveSkillByName(FString SkillName)
+void APGCharacterBase::ActiveSkillByName(const FString SkillName)
 {
 	FightComponent->ActiveSkill(SkillName);
 }

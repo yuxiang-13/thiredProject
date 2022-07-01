@@ -47,13 +47,7 @@ public:
 	//技能 （产生效果）
 	UFUNCTION()
 	virtual void OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGameplayEventData Payload);
-
-	// 激活
-	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle,
-		const FGameplayAbilityActorInfo* ActorInfo,
-		const FGameplayAbilityActivationInfo ActivationInfo,
-		const FGameplayEventData* TriggerEventData) override;
-
+	
 	// 结束
 	virtual void EndAbility(
 		const FGameplayAbilitySpecHandle Handle, // GA 技能 handle

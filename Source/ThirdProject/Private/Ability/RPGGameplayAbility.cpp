@@ -35,34 +35,6 @@ void URPGGameplayAbility::OnCancelled()
 	k2_OnCancelled();
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo,true,false);
 }
-// 激活某个能力
-void URPGGameplayAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
-	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-	const FGameplayEventData* TriggerEventData)
-{
-	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
-	
-	// // 开始执行 能力,失败 直接返回
-	// if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
-	// {
-	// 	return;
-	// }
-
-	// 强制冷却
-	if (!CommitAbilityCooldown(Handle, ActorInfo, ActivationInfo, true))
-	{
-		return;
-	}
-	
-	AThirdProjectCharacter * Character = Cast<AThirdProjectCharacter>(ActorInfo->OwnerActor);
-	if (Character)
-	{
-		// 成功,播放 蒙太奇
-		if (PlayMontage(*FString::FromInt(0)))
-		{
-		}
-	}
-}
 
 // task告诉执行蒙太奇
 UAbilityTask_PlayMontageAndWait* URPGGameplayAbility::PlayMontage(FName StartSection)

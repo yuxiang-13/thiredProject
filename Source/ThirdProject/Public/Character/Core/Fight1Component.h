@@ -52,7 +52,7 @@ struct FComboCheck
 	void Press()
 	{
 		// 第一次按下
-		if (ComboIndex == INDEX_NONE && Character)
+		if (ComboIndex == -1 && Character)
 		{
 			ComboIndex++;
 			check(Character);
@@ -61,10 +61,9 @@ struct FComboCheck
 		if (Character)
 		{
 			// 激活技能
-			Character->ActiveSkillByName("Character.Skill.CombeAttack");
+			Character->ActiveSkillByName(FString("Character.Skill.ComboAttack"));
 		}
 
-		// 第二次按下
 		bLongPress = bShortPress = true;
 	};
 	
@@ -78,13 +77,12 @@ struct FComboCheck
 	// 动画结束
 	void Reset()
 	{
-		ComboIndex = INDEX_NONE;
+		ComboIndex = -1;
 	};
 	
 	// 每次播放 引导到 下一个动作索引
 	void UpdateComboIndex()
 	{
-		check(ComboIndex > 0);
 		ComboIndex++;
 		if (ComboIndex > MaxIndex)
 		{

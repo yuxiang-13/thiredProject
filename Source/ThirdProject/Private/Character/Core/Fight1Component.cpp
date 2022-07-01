@@ -56,6 +56,8 @@ void UFight1Component::ActiveSkill(FString SkillName)
 {
 	if (IsValid(AbilitySystemComponent))
 	{
+		FName str = FName(SkillName);
+		
 		if (const FGameplayAbilitySpecHandle* Handle = Skills.Find(FName(SkillName)))
 		{
 			AbilitySystemComponent->TryActivateAbility(*Handle);
@@ -97,10 +99,10 @@ FGameplayAbilitySpecHandle UFight1Component::RegisterGameAbility(TArray<UGamepla
 			Skills.Add(FName(string), Handle) ;
 
 			// 初始化 注册连击
-			if (string.Equals("Character.Skill.CombeAttack"))
+			if (string.Find("Character.Skill.ComboAttack"))
 			{
 				ComboCheck.Character = Cast<AThirdProjectCharacter>(PGCharacterBase);
-				ComboCheck.ComboKey = "Character.Skill.CombeAttack";
+				ComboCheck.ComboKey = "Character.Skill.ComboAttack";
 				ComboCheck.MaxIndex = Cast<URPGGameplayAbility>(Temp)->MontageToPlay->CompositeSections.Num();
 			}
 		}
