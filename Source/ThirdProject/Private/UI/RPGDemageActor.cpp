@@ -18,14 +18,10 @@ ARPGDemageActor::ARPGDemageActor()
 
 void ARPGDemageActor::UpdateDamgeNum(const FText& InText)
 {
-	if ( DamageWidget)
-	{
-		if (UUI_DemageNumber* Damage = Cast<UUI_DemageNumber>(DamageWidget->GetUserWidgetObject()))
-		{
-			Damage->UpdateDemage(InText);
-		}
-		 // Cast<UUI_DemageNumber> (DamageWidget->GetWidget())->UpdateDemage(工nText);
-	}
+	// if (UUI_DemageNumber* Damage = Cast<UUI_DemageNumber>(DamageWidget->GetUserWidgetObject()))
+	// {
+	// 	Damage->UpdateDemage(InText);
+	// }
 }
 
 // Called when the game starts or when spawned

@@ -6,6 +6,7 @@
 #include "AttributeSet.h"
 #include "Ability/MyAttributeSet.h"
 #include "Ability/RPGAbilitySystemComponent.h"
+#include "Character/Core/Fight1Component.h"
 #include "UI/UI_EnemyHealthBar.h"
 
 // Sets default values
@@ -25,6 +26,10 @@ APGCharacterBase::APGCharacterBase()
 
 
 	RPGAttributeSet = CreateDefaultSubobject<UMyAttributeSet>(TEXT("RPGAttributeSet"));
+
+
+	FightComponent = CreateDefaultSubobject<UFight1Component>(TEXT("FightComponent"));
+	FightComponent->SetIsReplicated(true);
 }
 
 void APGCharacterBase::HandleHealthChanged(float InHealthPercent)
@@ -42,9 +47,9 @@ void APGCharacterBase::HandleHealthChanged(float InHealthPercent)
 void APGCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	// 参数1 挂载到谁的 组件
-	// 参数2 
+	// 注册 GAS
+	// 参数1 挂载到谁的 我们对谁采取行动
+	// 参数2 谁控制我们的信息
 	AbilitySystemComponent->InitAbilityActorInfo(this,this);
 	
 	// 构建 属性数组,把 属性类塞进去
@@ -54,6 +59,8 @@ void APGCharacterBase::BeginPlay()
 
 	HandleHealthChanged(RPGAttributeSet->GetHealth() / RPGAttributeSet->GetMaxHealth());
 }
+
+
 
 // Called every frame
 void APGCharacterBase::Tick(float DeltaTime)
@@ -69,3 +76,14 @@ void APGCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 }
 
+URPGAbilitySystemComponent* APGCharacterBase::GetAbilitySystemComponent()
+{
+	return AbilitySystemComponent;
+}
+
+
+// 激活一个能力 GiveAbility
+void APGCharacterBase::ActiveSkill(FGameplayTag SkillName)
+{
+	FightComponent->ActiveSkill(SkillName);
+}

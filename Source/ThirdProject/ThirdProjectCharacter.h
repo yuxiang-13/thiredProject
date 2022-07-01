@@ -38,11 +38,7 @@ public:
 	FUpdateProqressstate UpdateManaProgress;
 	FUpdateProqressstate UpdateStanProgress;
 	
-	FGameplayAbilitySpecHandle RegisterGameAbility(TArray<UGameplayAbility*> InAbilites);
 
-	
-	UFUNCTION(BlueprintCallable)
-	bool ActiveSkill(FGameplayTag SkillName);
 
 public:
 	void HandleHealthChanged(float InHealthPercent) override;

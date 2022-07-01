@@ -145,51 +145,10 @@ void AThirdProjectCharacter::BeginPlay()
 	// 把attributeSet和abilitySystem绑定好
 
 	
-	//读表注册能力
-	if(ARPGGameState* GameState = GetWorld()->GetGameState<ARPGGameState>()){
-		TArray<UGameplayAbility*> Abilities = GameState->GetCharacterSkills(1);
-		RegisterGameAbility(Abilities);
-	}
-
-
 	// 更新面板
 	UpdateHealth(1);
 	UpdateMana(1);
 	UpdateStan(1);
-}
-
-// 添加一个能力 GiveAbility
-FGameplayAbilitySpecHandle AThirdProjectCharacter::RegisterGameAbility(TArray<UGameplayAbility*> InAbilites)
-{
-	if (GetLocalRole() == ROLE_Authority)
-	{
-		if (IsValid(AbilitySystemComponent) && InAbilites.Num() > 0)
-		{
-			for(auto &Temp: InAbilites)
-			{
-				// 向GAS系统 添加一个能力 GiveAbility 拿到 handle
-				FGameplayAbilitySpecHandle Handle = AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Temp));
-				// 拿到技能tag
-				const FString string = Temp->AbilityTags.ToStringSimple();
-				//转成 fName 存到 map内
-				Skills.Add(FName(string), Handle) ;
-			}
-		}
-	}
-	return FGameplayAbilitySpecHandle();
-}
-
-// 激活一个能力 GiveAbility
-bool AThirdProjectCharacter::ActiveSkill(FGameplayTag SkillName)
-{
-	if (IsValid(AbilitySystemComponent))
-	{
-		if (const FGameplayAbilitySpecHandle* Handle = Skills.Find(FName(*SkillName.ToString())))
-		{
-			return AbilitySystemComponent->TryActivateAbility(*Handle);
-		}
-	}
-	return false;
 }
 
 void AThirdProjectCharacter::HandleHealthChanged(float InHealthPercent)
@@ -202,7 +161,7 @@ void AThirdProjectCharacter::HandleHealthChanged(float InHealthPercent)
 void AThirdProjectCharacter::UpdateHealth(float Num)
 {
 
-	RPGUtils::SpawnDanageNura(this, 10.f);
+	RPGUtils::SpawnDanageNum(this, 10.f);
 	UpdateHealthProgress.ExecuteIfBound(Num);
 
 	

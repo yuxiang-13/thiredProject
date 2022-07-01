@@ -15,6 +15,23 @@ class THIRDPROJECT_API APGCharacterBase : public ACharacter
 	GENERATED_BODY()
 
 public:
+	//1 引入 GAS
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
+	class URPGAbilitySystemComponent* AbilitySystemComponent;
+
+
+	// 属性
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
+	class UMyAttributeSet* RPGAttributeSet;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=RPGCharacterBase)
+	class UWidgetComponent* EnemyHealthyBar;
+
+	// 战斗组件
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=RPGCharacterBase)
+	class UFight1Component* FightComponent;
+
+public:
 	// Sets default values for this character's properties
 	APGCharacterBase();
 
@@ -25,26 +42,17 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+
+	
+	URPGAbilitySystemComponent* GetAbilitySystemComponent();
+	
+	
+	UFUNCTION(BlueprintCallable)
+	void ActiveSkill(FGameplayTag SkillName);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-
-
-
-	
-public:
-	//1 引入 GAS
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
-	class URPGAbilitySystemComponent* AbilitySystemComponent;
-
-	TMap<FName, FGameplayAbilitySpecHandle> Skills;
-
-	// 属性
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
-	class UMyAttributeSet* RPGAttributeSet;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=RPGCharacterBase)
-	class UWidgetComponent* EnemyHealthyBar;
 	
 };
