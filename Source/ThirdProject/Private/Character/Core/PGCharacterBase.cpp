@@ -43,6 +43,10 @@ void APGCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// 参数1 挂载到谁的 组件
+	// 参数2 
+	AbilitySystemComponent->InitAbilityActorInfo(this,this);
+	
 	// 构建 属性数组,把 属性类塞进去
 	TArray<UAttributeSet*> RPGAttributeSets;
 	RPGAttributeSets.Add(RPGAttributeSet) ;

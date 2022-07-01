@@ -4,6 +4,7 @@
 
 #include "Ability/MyAttributeSet.h"
 #include "Camera/CameraComponent.h"
+#include "Common/RPGUtils.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -139,10 +140,6 @@ void AThirdProjectCharacter::MoveRight(float Value)
 void AThirdProjectCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	if (GetLocalRole() == ENetRole::ROLE_Authority){
-		AbilitySystemComponent->InitAbilityActorInfo(this,this);
-	}
 
 	
 	// 把attributeSet和abilitySystem绑定好
@@ -204,7 +201,11 @@ void AThirdProjectCharacter::HandleHealthChanged(float InHealthPercent)
 
 void AThirdProjectCharacter::UpdateHealth(float Num)
 {
+
+	RPGUtils::SpawnDanageNura(this, 10.f);
 	UpdateHealthProgress.ExecuteIfBound(Num);
+
+	
 }
 
 void AThirdProjectCharacter::UpdateMana(float Num)
