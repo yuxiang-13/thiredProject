@@ -4,6 +4,7 @@
 
 #include "Ability/MyAttributeSet.h"
 #include "Camera/CameraComponent.h"
+#include "Character/Core/Fight1Component.h"
 #include "Common/RPGUtils.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -82,7 +83,25 @@ void AThirdProjectCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 	// handle touch devices
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AThirdProjectCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AThirdProjectCharacter::TouchStopped);
+
+
+	// 绑定按键
+	PlayerInputComponent->BindAction("ComboAttack", IE_Pressed, this, &AThirdProjectCharacter::ComboAttackOnPressed);
+	PlayerInputComponent->BindAction("ComboAttack", IE_Released, this, &AThirdProjectCharacter::ComboAttackOnReleased);
+
 }
+
+
+void AThirdProjectCharacter::ComboAttackOnPressed()
+{
+	GetFightComponent()->ComboAttackOnPressed();
+}
+
+void AThirdProjectCharacter::ComboAttackOnReleased()
+{
+	GetFightComponent()->ComboAttackOnReleased();
+}
+
 
 void AThirdProjectCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {

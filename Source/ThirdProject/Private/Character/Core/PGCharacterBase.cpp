@@ -76,6 +76,18 @@ void APGCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 }
 
+
+
+UFight1Component* APGCharacterBase::GetFightComponent()
+{
+	return FightComponent;
+}
+
+void APGCharacterBase::ActiveSkillByName(FString SkillName)
+{
+	FightComponent->ActiveSkill(SkillName);
+}
+
 URPGAbilitySystemComponent* APGCharacterBase::GetAbilitySystemComponent()
 {
 	return AbilitySystemComponent;
@@ -84,6 +96,11 @@ URPGAbilitySystemComponent* APGCharacterBase::GetAbilitySystemComponent()
 
 // 激活一个能力 GiveAbility
 void APGCharacterBase::ActiveSkill(FGameplayTag SkillName)
+{
+	FightComponent->ActiveSkill(SkillName);
+}
+
+void APGCharacterBase::ActiveSkillByString(const FString& SkillName)
 {
 	FightComponent->ActiveSkill(SkillName);
 }

@@ -55,6 +55,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
 	float TurnRateGamepad;
 
+	void ComboAttackOnPressed();
+	void ComboAttackOnReleased();
 protected:
 
 	/** Called for forwards/backward input */

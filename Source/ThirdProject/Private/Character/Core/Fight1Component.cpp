@@ -49,13 +49,35 @@ void UFight1Component::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UFight1Component::ActiveSkill(FGameplayTag SkillName)
 {
+	ActiveSkill(*SkillName.ToString());
+}
+
+void UFight1Component::ActiveSkill(FString SkillName)
+{
 	if (IsValid(AbilitySystemComponent))
 	{
-		if (const FGameplayAbilitySpecHandle* Handle = Skills.Find(FName(*SkillName.ToString())))
+		if (const FGameplayAbilitySpecHandle* Handle = Skills.Find(FName(SkillName)))
 		{
 			AbilitySystemComponent->TryActivateAbility(*Handle);
 		}
 	}
+}
+
+// 鼠标
+void UFight1Component::ComboAttackOnPressed()
+{
+	ComboCheck.Press();
+}
+
+void UFight1Component::ComboAttackOnReleased()
+{
+	ComboCheck.Releeased();
+}
+
+// 动画通知函数 回调
+void UFight1Component::ResetComboCheck()
+{
+	ComboCheck.Reset();
 }
 
 
@@ -73,6 +95,14 @@ FGameplayAbilitySpecHandle UFight1Component::RegisterGameAbility(TArray<UGamepla
 
 			
 			Skills.Add(FName(string), Handle) ;
+
+			// 初始化 注册连击
+			if (string.Equals("Character.Skill.CombeAttack"))
+			{
+				ComboCheck.Character = Cast<AThirdProjectCharacter>(PGCharacterBase);
+				ComboCheck.ComboKey = "Character.Skill.CombeAttack";
+				ComboCheck.MaxIndex = Cast<URPGGameplayAbility>(Temp)->MontageToPlay->CompositeSections.Num();
+			}
 		}
 	}
 	return FGameplayAbilitySpecHandle();

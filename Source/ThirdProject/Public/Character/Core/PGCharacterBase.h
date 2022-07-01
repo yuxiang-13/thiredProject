@@ -43,13 +43,18 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-
+	UFight1Component* GetFightComponent();
+	
+	void ActiveSkillByName(FString SkillName);
+	
 	
 	URPGAbilitySystemComponent* GetAbilitySystemComponent();
 	
 	
 	UFUNCTION(BlueprintCallable)
-	void ActiveSkill(FGameplayTag SkillName);
+		void ActiveSkill(FGameplayTag SkillName);
+	UFUNCTION(BlueprintCallable)
+		void ActiveSkillByString(const FString& SkillName);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
