@@ -103,7 +103,6 @@ void URPGGameplayAbility::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGam
 	//把我们的数据添加到处理目标数据的handle里面
 	TargetHandleData.Add(NewTargetData_Actorlrray);
 	
-	
 	//1 创建GE handle
 	// 从所有激活的GE 遍历（find 找对应GA激活的GE,这里全部激活）
 	for (auto &Tmp: EffectMap)
@@ -122,8 +121,6 @@ void URPGGameplayAbility::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGam
 		{
 			// 找到 GA 的实例 （通过 GA 的 Handle 获取 GA 的实例）
 			FGameplayAbilitySpec* AbilitySpec = GetAbilitySystemComponentFromActorInfo()->FindAbilitySpecFromHandle(CurrentSpecHandle);
-			
-			
 			//3 把GA捕获的信息，应用到GE上
 			ApplyAbilityTagsToGameplayEffectSpec(*NewGEHandle.Data.Get(), AbilitySpec);
 		
@@ -132,9 +129,7 @@ void URPGGameplayAbility::OnDamageGameplayEvent(FGameplayTag InGameplayTag, FGam
 				NewGEHandle.Data->SetByCallerTagMagnitudes = AbilitySpec->SetByCallerTagMagnitudes;
 			}
 		}
-	
-	
-		// 这块触发了  属性的 UMyAttributeSet::PostGameplayEffectExecute
+		// K2_ApplyGameplayEffectSpecToTarget  用于出发 技能效果
 		TArray<FActiveGameplayEffectHandle> ActiveGameplayEffectHandle = K2_ApplyGameplayEffectSpecToTarget(NewGEHandle, TargetHandleData);
 	}
 }

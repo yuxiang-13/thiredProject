@@ -26,7 +26,7 @@ void URPGAbilityTask_PMAW::Activate()
 		UAnimInstance* AnimInstance = ActorInfo->GetAnimInstance();
 		
 		if(AnimInstance) {
-			//绑定 承伤 代理
+			//激活 接口 Activate ，把自己的 OnDamageGameplayEvent 接口 绑定给 Tag容器事件
 			EventHandle = AbilitySystemComponent->AddGameplayEventTagContainerDelegate(
 				EventTags,
 				FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &URPGAbilityTask_PMAW::OnDamageGameplayEvent)
@@ -72,7 +72,7 @@ URPGAbilityTask_PMAW* URPGAbilityTask_PMAW::CreatePMAWDamageEventProxy(UGameplay
 
 void URPGAbilityTask_PMAW::OnDamageGameplayEvent(FGameplayTag InGameplayTag, const FGameplayEventData* Payload)
 {
-	//TASK 执行完了，我需要回调GA告诉GA 你的表现执行完了你可以继续往下走了（表现 蒙太奇执行结束了）
+	//TASK 执行完了，我需要回调GA告诉GA 你的表现执行完了你可以继续往下走了（表现 ）
 	// 
 	if (ShouldBroadcastAbilityTaskDelegates()) {
 		FGameplayEventData EventData = *Payload; // 标签

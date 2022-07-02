@@ -16,7 +16,7 @@ void URPGGameplayAbility_Skill::ActivateAbility(const FGameplayAbilitySpecHandle
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
 
-	// // 开始执行 能力,失败 直接返回
+	// // 如果从"激活"中调用`CommitAbility`函数，它将应用执行技能的消耗 作者：_jiejie_cj https://www.bilibili.com/read/cv8433798/ 出处：bilibili
 	// if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
 	// {
 	// 	return;

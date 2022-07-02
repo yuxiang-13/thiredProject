@@ -67,6 +67,7 @@ void UFight1Component::ActiveSkill(FString SkillName)
 
 void UFight1Component::PlayHit()
 {
+	
 	ActiveSkill("Character.State.Hit");
 }
 

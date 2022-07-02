@@ -54,9 +54,10 @@ public:
 	void SetBoxExtent(const FVector & InNewBoxExtent);
 
 	// 设置GAS标签（激活哪种能力）告诉系统.们要激发哪个能力
-
 	void SetBuffs(const TArray<FGameplayTag>& InBuffs) { BuffsTags = InBuffs; };
-	
+
+	// 是否造成效果
+	bool IsExist(ACharacter* InNewTaget) const;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

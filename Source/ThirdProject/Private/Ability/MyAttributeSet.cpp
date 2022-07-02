@@ -29,7 +29,6 @@ void UMyAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallback
 	{
 		DeltaValue = Data.EvaluatedData.Magnitude;
 	}
-	
 
 	AActor* TargetActor = nullptr;
 	AController* TargetController = nullptr;
@@ -43,7 +42,6 @@ void UMyAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallback
 	
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
-		// SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetMaxHealth()));
 		if (TargetCharacter)
 		{
 			TargetCharacter->HandleHealthChanged(GetHealth() / GetMaxHealth());

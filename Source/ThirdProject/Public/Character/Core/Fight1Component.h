@@ -84,7 +84,7 @@ struct FComboCheck
 	void UpdateComboIndex()
 	{
 		ComboIndex++;
-		if (ComboIndex > MaxIndex)
+		if (ComboIndex > MaxIndex - 1)
 		{
 			ComboIndex = 1;
 		}

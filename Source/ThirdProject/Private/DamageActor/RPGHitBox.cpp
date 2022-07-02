@@ -27,6 +27,11 @@ ARPGHitBox::ARPGHitBox(const FObjectInitializer& ObjectInitializer)
 void ARPGHitBox::HandleDamage(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if(APGCharacterBase* InCharacter = Cast<APGCharacterBase>(OtherActor))
+	{
+		// 添加 唯一
+		AttackedTarget.AddUnique(InCharacter);
+	}
 	//首先排除白己,在通知攻击函数里面传入,是谁生成了它
 	// 此处设置 自定义碰撞 更好
 	if (GetInstigator() != OtherActor)
@@ -40,8 +45,12 @@ void ARPGHitBox::HandleDamage(UPrimitiveComponent* OverlappedComponent, AActor* 
 				FGameplayEventData EventData;
 				EventData.Instigator = GetInstigator();
 				EventData.Target = Enemy;
-
-
+				
+				//已经对该对象产生伤害
+				if (IsExist(InPawn))
+				{
+					return;
+				}
 				if(!BuffsTags.IsEmpty()) { //BuffsTags
 					for (auto& Tmp :BuffsTags)
 					{
@@ -52,7 +61,7 @@ void ARPGHitBox::HandleDamage(UPrimitiveComponent* OverlappedComponent, AActor* 
 
 				Destroyed();
 
-				// InPawn->PlayHit();
+				Enemy->PlayHit();
 			}
 
 			
@@ -96,3 +105,18 @@ void ARPGHitBox::Tick(float DeltaTime)
 
 }
 
+bool ARPGHitBox::IsExist(ACharacter* InNewTaget) const
+{
+	for (auto& Tmp : AttackedTarget)
+	{
+		if(IsValid(Tmp))
+		{
+			if (Tmp == InNewTaget)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
