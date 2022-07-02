@@ -48,7 +48,7 @@ public:
 	virtual UPrimitiveComponent* GetHitDamage();
 
 	// 设置 碰撞盒子 位置函数
-	void SetHitDamageRelativePosition();
+	void SetHitDamageRelativePosition(const FVector& inNewPoation);
 
 	// 设置盒子 大小
 	void SetBoxExtent(const FVector & InNewBoxExtent);

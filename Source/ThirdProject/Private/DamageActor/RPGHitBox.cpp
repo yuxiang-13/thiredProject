@@ -3,6 +3,9 @@
 
 #include "DamageActor/RPGHitBox.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "Abilities/GameplayAbilityTypes.h"
+#include "Character/Core/PGCharacterBase.h"
 #include "Components/BoxComponent.h"
 
 ARPGHitBox::ARPGHitBox(const FObjectInitializer& ObjectInitializer)
@@ -24,18 +27,59 @@ ARPGHitBox::ARPGHitBox(const FObjectInitializer& ObjectInitializer)
 void ARPGHitBox::HandleDamage(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	//首先排除白己,在通知攻击函数里面传入,是谁生成了它
+	// 此处设置 自定义碰撞 更好
+	if (GetInstigator() != OtherActor)
+	{
+		if (APGCharacterBase* InPawn = Cast<APGCharacterBase>(GetInstigator()))
+		{
+			APGCharacterBase* Enemy = Cast<APGCharacterBase>(OtherActor);
+			if (Enemy)
+			{
+				//传给GAs的事件数据
+				FGameplayEventData EventData;
+				EventData.Instigator = GetInstigator();
+				EventData.Target = Enemy;
+
+
+				if(!BuffsTags.IsEmpty()) { //BuffsTags
+					for (auto& Tmp :BuffsTags)
+					{
+						//数据上的处理受伤
+						UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetInstigator(), Tmp, EventData);
+					}
+				}
+
+				Destroyed();
+
+				// InPawn->PlayHit();
+			}
+
+			
+		}
+
+		
+	}
+	
+
 }
 
 UPrimitiveComponent* ARPGHitBox::GetHitDamage()
 {
+	return HitDamage;
 }
 
-void ARPGHitBox::SetHitDamageRelativePosition()
+void ARPGHitBox::SetHitDamageRelativePosition(const FVector& inNewPoation)
 {
+	if (UPrimitiveComponent* InHitComponent = GetHitDamage())
+	{
+		InHitComponent->SetRelativeLocation (inNewPoation);
+	}
 }
 
 void ARPGHitBox::SetBoxExtent(const FVector& InNewBoxExtent)
 {
+	HitDamage->SetBoxExtent(InNewBoxExtent);
 }
 
 // Called when the game starts or when spawned
