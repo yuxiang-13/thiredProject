@@ -16,11 +16,25 @@ class THIRDPROJECT_API UUI_Skill_Slot : public UUI_Slot_Base
 {
 	GENERATED_BODY()
 public:
+	// 技能ICon
 	UPROPERTY(meta=(BindWidget))
 	class UImage* SlotImage;
-	
+	// 冷却数字
 	UPROPERTY(meta=(BindWidget))
 	class UTextBlock* SlotCDValue;
+	// 冷却图片
+	UPROPERTY(meta=(BindWidget))
+	class UImage* SlotCD;
+	
+	//CD动态材质UPROPERTYo
+	UPROPERTY()
+	class UMaterialInstanceDynamic* CDMaterialDynamic;
+public:
+	//绘制材质CL
+	void DrawSlotCDMat(float InSlotCD);
+
+	// 对应的的标整。由它的上级传入
+	FName Tags;
 public:
 	virtual void NativeConstruct() override;
 
@@ -29,9 +43,11 @@ public:
 	//由面板调用。更新GA的信息到s1ot上
 	void Update(const FSkillDataTable InSkillDataTable);
 
-	
-	// 对应的的标整。由它的上级传入
-	FName Tags;
+	UPROPERTY()
+		float CoolDown;
+	UPROPERTY()
+		float MaxCoolDown;
+
 
 public:
 	// 儅激活时触发，有蓝图配置 映射输入

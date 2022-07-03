@@ -6,9 +6,30 @@
 #include "Abilities/GameplayAbility.h"
 #include "Character/Core/PGCharacterBase.h"
 #include "Components/Image.h"
+#include "Components/TextBlock.h"
 
 int32 UUI_Skill_Slot::P1ayerSkillNumber = 0;
-	
+
+void UUI_Skill_Slot::DrawSlotCDMat(float InSlotCD)
+{
+	if (CDMaterialDynamic)
+	{
+		if (InSlotCD > 0.0f && InSlotCD < 1.0f)
+		{
+			CDMaterialDynamic->SetScalarParameterValue(FName("Param"), true);
+			SlotCD->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+		} else
+		{
+			
+			CDMaterialDynamic->SetScalarParameterValue(FName("Param"), false);
+			SlotCD->SetVisibility(ESlateVisibility::Hidden);
+		}
+
+		CDMaterialDynamic->SetScalarParameterValue(FName("Param"), InSlotCD);
+
+	}
+}
+
 void UUI_Skill_Slot::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -24,13 +45,29 @@ void UUI_Skill_Slot::NativeConstruct()
 	FString InPlayerSkil1Name = FString::Printf(TEXT("PlayerSkill_%i"), P1ayerSkillNumber);
 
 	GetWorld()->GetFirstPlayerController()->InputComponent->BindAction(*InPlayerSkil1Name, IE_Pressed, this, &UUI_Skill_Slot::OnClickWidget);
+
+	//关联图片的动态材质
+	CDMaterialDynamic = SlotCD->GetDynamicMaterial();
+
+	
+	CoolDown = 10.0f;
+	MaxCoolDown = 10.0f;
 }
 
 void UUI_Skill_Slot::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 
-
+	if (CoolDown > 0.f)
+	{
+		SlotCDValue->SetVisibility(ESlateVisibility::HitTestInvisible);
+		CoolDown -= InDeltaTime;
+		DrawSlotCDMat(1 - CoolDown / MaxCoolDown);
+		SlotCDValue->SetText(FText::FromString( FString::Printf(TEXT("%.1f"), CoolDown)));
+	} else
+	{
+		SlotCDValue->SetVisibility(ESlateVisibility::Hidden);
+	}
 	
 }
 
