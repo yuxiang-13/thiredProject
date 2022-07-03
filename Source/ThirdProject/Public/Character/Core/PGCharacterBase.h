@@ -31,6 +31,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=RPGCharacterBase)
 	class UFight1Component* FightComponent;
 
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=RPGCharacterBase)
+	int32 CharacterID;
+
+	
 public:
 	// Sets default values for this character's properties
 	APGCharacterBase();
@@ -44,6 +49,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFight1Component* GetFightComponent();
+
+	FORCEINLINE int32 GetCharacterID() { return CharacterID; };
 	
 	void ActiveSkillByName(FString SkillName);
 	

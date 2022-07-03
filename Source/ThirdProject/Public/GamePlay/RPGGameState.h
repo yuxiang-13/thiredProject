@@ -23,6 +23,8 @@ public:
 	TArray<UGameplayAbility*> GetCharacterSkills(int32 InCharacterID);
 	// 获取所有技能
 	TArray<FSkillDataTable*> GetCharacterSkillTables();
+	// 获取所有技能
+	TArray<FSkillDataTable*> GetCharacterSkillTables(int32 CharacterID);
 	
 protected:
 	UPROPERTY()
