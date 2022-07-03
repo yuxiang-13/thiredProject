@@ -8,6 +8,7 @@
 #include "GameFramework/Character.h"
 #include "PGCharacterBase.generated.h"
 
+DECLARE_DELEGATE_TwoParams(FUpdateSkillCoolDownDelegate, const FName&, float);
 
 UCLASS()
 class THIRDPROJECT_API APGCharacterBase : public ACharacter
@@ -35,6 +36,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=RPGCharacterBase)
 	int32 CharacterID;
 
+
+	// 更新CD
+	FUpdateSkillCoolDownDelegate UpdateSkillCooldownDelegate;
 	
 public:
 	// Sets default values for this character's properties
@@ -63,10 +67,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void ActiveSkillByString(const FString& SkillName);
 
+	void CallUpdateCoolDown(const FName& InTagName, float InCooldownValue);
+	
 	void PlayHit();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	
 };

@@ -31,5 +31,7 @@ public:
 	//初始化布局
 	void LayoutSlot();
 
-	
+	// 绑定CD
+	UFUNCTION()
+	void UpdateSkillCD(const FName& InTagNum, float InCDValue);
 };

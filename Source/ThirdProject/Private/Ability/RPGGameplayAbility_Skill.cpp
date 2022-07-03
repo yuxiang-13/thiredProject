@@ -31,6 +31,8 @@ void URPGGameplayAbility_Skill::ActivateAbility(const FGameplayAbilitySpecHandle
 	AThirdProjectCharacter * Character = Cast<AThirdProjectCharacter>(ActorInfo->OwnerActor);
 	if (Character)
 	{
+		// 呼叫 CD
+		CallUpdateCoolDown();
 		// 成功,播放 蒙太奇
 		if (PlayMontage(*FString::FromInt(0)))
 		{
@@ -38,4 +40,23 @@ void URPGGameplayAbility_Skill::ActivateAbility(const FGameplayAbilitySpecHandle
 	}
 
 	
+}
+
+void URPGGameplayAbility_Skill::CallUpdateCoolDown()
+{
+	// 内部函数  获取CD
+	if (UGameplayEffect* InCoolDownGE = GetCooldownGameplayEffect())
+	{
+		float CDValue = 0.f;
+		// 获取持续模式 DurationMagnitude
+		if (InCoolDownGE->DurationMagnitude.GetStaticMagnitudeIfPossible(GetAbilityLevel(), CDValue) && CDValue != 0)
+		{
+			if (AThirdProjectCharacter * Character = Cast<AThirdProjectCharacter>(GetActorInfo().OwnerActor))
+			{
+				// AbilityTags.ToStringSimple() 获取GA的名字
+				Character->CallUpdateCoolDown(*AbilityTags.ToStringSimple(), CDValue);
+			}
+		}
+		}
+	}
 }

@@ -49,6 +49,8 @@ public:
 		float MaxCoolDown;
 
 
+	void StartUpdateCD(float InCDValue);
+	void SetMaxCD(float InCDValue);
 public:
 	// 儅激活时触发，有蓝图配置 映射输入
 	virtual void OnClickWidget();

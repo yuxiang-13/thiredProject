@@ -12,6 +12,47 @@ void UUI_SkillPanel::NativeConstruct()
 {
 	Super::NativeConstruct();
 	LayoutSlot();
+
+	// if (APGCharacterBase* InCharacter = GetWorld()->GetFirstPlayerController()->GetPawn<APGCharacterBase>())
+
+	if (APlayerController* InPlayerController = GetWorld()->GetFirstPlayerController<APlayerController>()) 
+	{
+		if (APGCharacterBase* InCharacter = InPlayerController->GetPawn<APGCharacterBase>())
+		{
+			InCharacter.UpdateSkillCooldownDelegate.BindUObject(this, &UUI_SkillPanel::UpdateSkillCD);
+		}
+	}
+	
+}
+
+void UUI_SkillPanel::UpdateSkillCD(const FName& InTagNum, float InCDValue)
+{
+	auto FindTemp = [&](UUI_Skill_Slot* InSkillBlot)
+	{
+		if (InSkillBlot->Tags == InTagNum)
+		{
+			InSkillBlot->StartUpdateCD(InCDValue);
+			InSkillBlot->SetMaxCD(InCDValue);
+			return true;
+		} else
+		{
+			return false;
+		}
+	};
+
+
+	if (SlotArray)
+	{
+		for (int32 i = 0; i < SlotArray->GetChildrenCount(); i++)
+		{
+			// 执行更新 CD 函数
+			if (FindTemp(Cast<UUI_Skill_Slot>(SlotArray->GetChildAt(i))))
+			{
+				break;
+			}
+		}
+	}
+	
 }
 
 void UUI_SkillPanel::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)

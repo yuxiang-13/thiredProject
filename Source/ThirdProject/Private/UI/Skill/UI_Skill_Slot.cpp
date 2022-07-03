@@ -50,8 +50,6 @@ void UUI_Skill_Slot::NativeConstruct()
 	CDMaterialDynamic = SlotCD->GetDynamicMaterial();
 
 	
-	CoolDown = 10.0f;
-	MaxCoolDown = 10.0f;
 }
 
 void UUI_Skill_Slot::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -80,6 +78,16 @@ void UUI_Skill_Slot::Update(const FSkillDataTable InSkillDataTable)
 		FString GATag = GA->AbilityTags.ToStringSimple();
 		Tags = FName(GATag);
 	}
+}
+
+void UUI_Skill_Slot::StartUpdateCD(float InCDValue)
+{
+	CoolDown = InCDValue;
+}
+
+void UUI_Skill_Slot::SetMaxCD(float InCDValue)
+{
+	MaxCoolDown = InCDValue;
 }
 
 void UUI_Skill_Slot::OnClickWidget()

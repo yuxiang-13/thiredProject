@@ -106,6 +106,12 @@ void APGCharacterBase::ActiveSkillByString(const FString& SkillName)
 	FightComponent->ActiveSkill(SkillName);
 }
 
+void APGCharacterBase::CallUpdateCoolDown(const FName& InTagName, float InCooldownValue)
+{
+	// 执行 更新CD 代理 (UI内绑定)
+	UpdateSkillCooldownDelegate.ExecuteIfBound(InTagName, InCooldownValue);
+}
+
 
 void APGCharacterBase::PlayHit()
 {
