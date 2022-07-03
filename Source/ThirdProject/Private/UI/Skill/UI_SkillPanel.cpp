@@ -19,7 +19,7 @@ void UUI_SkillPanel::NativeConstruct()
 	{
 		if (APGCharacterBase* InCharacter = InPlayerController->GetPawn<APGCharacterBase>())
 		{
-			InCharacter.UpdateSkillCooldownDelegate.BindUObject(this, &UUI_SkillPanel::UpdateSkillCD);
+			InCharacter->UpdateSkillCooldownDelegate.BindUObject(this, &UUI_SkillPanel::UpdateSkillCD);
 		}
 	}
 	

@@ -8,7 +8,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Net/UnrealNetwork.h"
 
-UMyAttributeSet::UMyAttributeSet(): Health(50.f), Mana(50.f), MaxHealth(100.f)
+UMyAttributeSet::UMyAttributeSet(): Health(50.f), Mana(500000.f), MaxHealth(100.f)
 {
 }
 

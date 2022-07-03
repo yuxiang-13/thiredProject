@@ -57,6 +57,5 @@ void URPGGameplayAbility_Skill::CallUpdateCoolDown()
 				Character->CallUpdateCoolDown(*AbilityTags.ToStringSimple(), CDValue);
 			}
 		}
-		}
 	}
 }
