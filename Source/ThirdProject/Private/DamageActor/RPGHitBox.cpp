@@ -58,19 +58,10 @@ void ARPGHitBox::HandleDamage(UPrimitiveComponent* OverlappedComponent, AActor* 
 						UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetInstigator(), Tmp, EventData);
 					}
 				}
-
-				Destroyed();
-
 				Enemy->PlayHit();
 			}
-
-			
 		}
-
-		
 	}
-	
-
 }
 
 UPrimitiveComponent* ARPGHitBox::GetHitDamage()
@@ -82,7 +73,7 @@ void ARPGHitBox::SetHitDamageRelativePosition(const FVector& inNewPoation)
 {
 	if (UPrimitiveComponent* InHitComponent = GetHitDamage())
 	{
-		InHitComponent->SetRelativeLocation (inNewPoation);
+		InHitComponent->SetRelativeLocation(inNewPoation);
 	}
 }
 
@@ -91,11 +82,17 @@ void ARPGHitBox::SetBoxExtent(const FVector& InNewBoxExtent)
 	HitDamage->SetBoxExtent(InNewBoxExtent);
 }
 
+void ARPGHitBox::SetBuffs(const TArray<FGameplayTag>& InBuffs)
+{ 
+	BuffsTags = InBuffs;
+}
+
 // Called when the game starts or when spawned
 void ARPGHitBox::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	HitDamage->OnComponentBeginOverlap.AddDynamic(this, &ARPGHitBox::HandleDamage);
 }
 
 // Called every frame

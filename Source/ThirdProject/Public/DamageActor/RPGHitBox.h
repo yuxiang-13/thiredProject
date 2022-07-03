@@ -23,7 +23,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "HitCollision")
 	class UBoxComponent* HitDamage;
 
-protected:
+public:
 	UPROPERTY()
 		TArray<FGameplayTag> BuffsTags;
 
@@ -54,7 +54,7 @@ public:
 	void SetBoxExtent(const FVector & InNewBoxExtent);
 
 	// 设置GAS标签（激活哪种能力）告诉系统.们要激发哪个能力
-	void SetBuffs(const TArray<FGameplayTag>& InBuffs) { BuffsTags = InBuffs; };
+	void SetBuffs(const TArray<FGameplayTag>& InBuffs);
 
 	// 是否造成效果
 	bool IsExist(ACharacter* InNewTaget) const;
