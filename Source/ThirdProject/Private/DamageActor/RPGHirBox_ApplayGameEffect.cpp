@@ -7,6 +7,10 @@
 #include "Ability/RPGAbilitySystemComponent.h"
 #include "Character/Core/PGCharacterBase.h"
 #include "Components/BoxComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/KismetInputLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
+
 
 ARPGHirBox_ApplayGameEffect::ARPGHirBox_ApplayGameEffect(const FObjectInitializer& ObjectInitializer)
 {
@@ -21,7 +25,20 @@ ARPGHirBox_ApplayGameEffect::ARPGHirBox_ApplayGameEffect(const FObjectInitialize
 
 	// 存活周期
 	InitialLifeSpan = 1.0f;
-	// 
+	
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
+	// 最大速度
+	ProjectileMovement->MaxSpeed = 2000.f;
+	// 默认速度
+	ProjectileMovement->InitialSpeed = 1600.f;
+	//关闭重力，不关重力就是抛物线
+	ProjectileMovement->ProjectileGravityScale = 0.f;
+
+	// 控制移动
+	ProjectileMovement->SetUpdatedComponent(RootComponent) ;
+
+
+	HitCollisionType = EHitCollisionType::HITCOLLISIONTYPE_SHORT_RANGE_ATTACK;
 }
 
 void ARPGHirBox_ApplayGameEffect::HandleDamage(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -119,4 +136,71 @@ bool ARPGHirBox_ApplayGameEffect::IsExist(ACharacter* InNewTaget) const
 	}
 
 	return false;
+}
+
+
+
+void ARPGHirBox_ApplayGameEffect::PreInitCollision(AActor* InMyInstigator)
+{
+	if (!InMyInstigator)
+	{
+		return;
+	}
+
+	
+	// 获取 发起者 向前的向量
+	FVector ShootDirection = InMyInstigator->GetActorForwardVector();
+	
+	switch (HitCollisionType)
+	{
+	case EHitCollisionType::HITCOLLISIONTYPE_SHORT_RANGE_ATTACK: //近程攻击
+		{
+			// 最大速度
+			ProjectileMovement->MaxSpeed = 0.f;
+			// 默认速度
+			ProjectileMovement->InitialSpeed = 0.f;
+			//关闭重力，不关重力就是抛物线
+			ProjectileMovement->ProjectileGravityScale = 0.f;
+			break;
+		}
+	case EHitCollisionType::HITCOLLISIONTYPE_DIRECT_LINE:     //无障碍直线玫击工
+		{
+			RootComponent->SetWorldRotation(FRotator::ZeroRotator);
+			ProjectileMovement->Velocity = ShootDirection * ProjectileMovement->InitialSpeed;
+
+			
+			FString VForward = ProjectileMovement->Velocity.ToString();
+			// FString::Printf 格式话字符串
+			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::White, FString::Printf(TEXT(",%s"), *VForward));
+
+			
+			break;
+		}
+	case EHitCollisionType::HITCOLLISIONTYPE_LINE:
+		{
+
+			break;
+		}
+	case EHitCollisionType::HITCOLLISIONTYPE_TRACK_LINE:
+		{
+
+			break;
+		}
+	case EHitCollisionType::HITCOLLISIONTYPE_RANGE_LINE:
+		{
+
+			break;
+		}
+	case EHitCollisionType::HITCOLLISIONTYPE_RANGE:
+		{
+
+			break;
+		}
+	case EHitCollisionType::HITCOLLISIONTYPE_CHAIN:
+		{
+
+			break;
+		}
+	}
+    
 }

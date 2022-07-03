@@ -42,10 +42,6 @@ void UAnimNotify_ApplayGameplayEffect::Notify(USkeletalMeshComponent* MeshComp, 
 
 			FString VForward = ComponentLocation.ToString();
 
-
-			// FString::Printf 格式话字符串
-			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::White, FString::Printf(TEXT(",%s"), *VForward));
-
 			if (ARPGHirBox_ApplayGameEffect* HitCollision = InCharacter->GetWorld()->SpawnActorDeferred<ARPGHirBox_ApplayGameEffect>(
 				HitObjectClass,
 				Transform,
@@ -55,12 +51,12 @@ void UAnimNotify_ApplayGameplayEffect::Notify(USkeletalMeshComponent* MeshComp, 
 
 			{
 				//延迟生成但是还没有生成 
-				// 
 				//
+
 
 				
 				//构造体的预初始化 
-				// HitCollision->PreInitCollision(InCharacter);
+				HitCollision->PreInitCollision(InCharacter);
 				//设置激活的GE类
 				HitCollision->SetGameplayEffect(EffectClass);
 
@@ -69,7 +65,7 @@ void UAnimNotify_ApplayGameplayEffect::Notify(USkeletalMeshComponent* MeshComp, 
 				//设置相对位置
 				FVector RelativeLocation = HitCollision->GetHitDamage()->GetRelativeLocation();
 				HitCollision->SetHitDamageRelativePosition(RelativeLocation + RelativeOffsetLocation);
-				//	HitCollision->SetActorRotation(ComponentRotation + RotationOffset);
+				HitCollision->SetActorRotation(ComponentRotation + RotationOffset);
 						//设置生命周期
 				HitCollision->SetLifeSpan(LifeTime);
 

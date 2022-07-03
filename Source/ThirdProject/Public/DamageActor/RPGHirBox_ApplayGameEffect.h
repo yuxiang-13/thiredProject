@@ -8,7 +8,22 @@
 #include "GameFramework/Actor.h"
 #include "RPGHirBox_ApplayGameEffect.generated.h"
 
-UCLASS()
+//这是个定义磁童类型的枚举UENUMN(BiueprintType)
+UENUM(BlueprintType)
+enum class EHitCollisionType: uint8
+{
+	HITCOLLISIONTYPE_SHORT_RANGE_ATTACK        UMETA(DisplayName = "Short range attack"),//近程攻击
+	HITCOLLISIONTYPE_DIRECT_LINE            UMETA(DisplayName = "Direct Line"),    //无障碍直线玫击工
+	HITCOLLISIONTYPE_LINE                    UMETA(DisplayName = "Line" ), //非跟路类型,类似手枪子单:
+	HITCOLLISIONTYPE_TRACK_LINE                UMETA(DisplayName = "Track Line"), //跟踪类型
+	HITCOLLISIONTYPE_RANGE_LINE                UMETA(DisplayName = "Range Line"), //范围伤吉，丢手雷:
+	HITCOLLISIONTYPE_RANGE                    UMETA(DisplayName = "Range"), //范围伤害，类似白爆:
+	HITCOLLISIONTYPE_CHAIN                    UMETA(DisplayName = "Chain") //链条类型,持续伤害类型:
+};
+
+
+ 
+UCLASS(BlueprintType, Blueprintable)
 class THIRDPROJECT_API ARPGHirBox_ApplayGameEffect : public AActor
 {
 	GENERATED_BODY()
@@ -20,7 +35,13 @@ public:
 	class UBoxComponent* HitDamage;
 
 
-
+	// 投掷组件
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "HitCollision")
+	class UProjectileMovementComponent* ProjectileMovement;
+public:
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "HitCollision")
+	EHitCollisionType HitCollisionType;
+     
 	
 public:	
 	// Sets default values for this actor's properties
@@ -49,6 +70,13 @@ public:
 
 	// 是否造成效果
 	bool IsExist(ACharacter* InNewTaget) const;
+
+	
+	//这个是用来在初始化之前设置磁碰撞类型的函数
+	virtual void PreInitCollision(AActor* InMyInstigator);
+
+
+     
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
