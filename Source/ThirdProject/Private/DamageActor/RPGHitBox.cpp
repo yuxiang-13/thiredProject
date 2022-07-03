@@ -20,7 +20,7 @@ ARPGHitBox::ARPGHitBox(const FObjectInitializer& ObjectInitializer)
 	HitDamage->SetupAttachment(HitCollisionRootComponent);
 
 	// 存活周期
-	InitialLifeSpan = 4.0f;
+	InitialLifeSpan = 2.0f;
 	// 
 }
 

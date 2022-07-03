@@ -56,9 +56,11 @@ void UAnimNotify_ApplayGameplayEffect::Notify(USkeletalMeshComponent* MeshComp, 
 			{
 				//延迟生成但是还没有生成 
 				// 
-				// 		
+				//
+
+				
 				//构造体的预初始化 
-				HitCollision->PreInitCollision(InCharacter);
+				// HitCollision->PreInitCollision(InCharacter);
 				//设置激活的GE类
 				HitCollision->SetGameplayEffect(EffectClass);
 
@@ -82,19 +84,8 @@ void UAnimNotify_ApplayGameplayEffect::Notify(USkeletalMeshComponent* MeshComp, 
 					HitCollision->AttachToComponent(MeshComp, FAttachmentTransformRules::SnapToTargetNotIncludingScale, InSocketName);
 				}
 
-		
-
-
-
 			}
-
-
 		}
 		}
-
-
 	}
-
-
-
 }

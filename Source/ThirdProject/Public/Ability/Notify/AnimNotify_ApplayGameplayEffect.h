@@ -7,7 +7,7 @@
 #include "Animation/AnimNotifies/AnimNotify.h"
 #include "AnimNotify_ApplayGameplayEffect.generated.h"
 
-class ARPGHitBox_ApplyGameEffect;
+class ARPGHirBox_ApplayGameEffect;
 /**
  * 
  */
@@ -21,6 +21,8 @@ public:
 	virtual FString GetNotifyName_Implementation() const override;
 
 	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
+
+	
 	//应用哪一个GE的实例
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General configuration")
 	TSubclassOf<UGameplayEffect> EffectClass;
@@ -28,7 +30,7 @@ public:
 	
 	//生成哪一个盒体 匹配生成的盒体才能产生响应的效果
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General Configuration")
-	TSubclassOf<ARPGHitBox_ApplyGameEffect> HitObjectClass;
+	TSubclassOf<ARPGHirBox_ApplayGameEffect> HitObjectClass;
 
 
 	//碰撞体的相对位置

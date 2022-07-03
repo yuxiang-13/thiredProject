@@ -20,31 +20,25 @@ ARPGHirBox_ApplayGameEffect::ARPGHirBox_ApplayGameEffect(const FObjectInitialize
 	HitDamage->SetupAttachment(HitCollisionRootComponent);
 
 	// 存活周期
-	InitialLifeSpan = 4.0f;
+	InitialLifeSpan = 1.0f;
 	// 
 }
 
 void ARPGHirBox_ApplayGameEffect::HandleDamage(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(APGCharacterBase* InCharacter = Cast<APGCharacterBase>(OtherActor))
-	{
-		// 添加 唯一
-		AttackedTarget.AddUnique(InCharacter);
-	}
 	//首先排除白己,在通知攻击函数里面传入,是谁生成了它
 	// 此处设置 自定义碰撞 更好
 	if (GetInstigator() != OtherActor)
 	{
-		if (APGCharacterBase* InPawn = Cast<APGCharacterBase>(GetInstigator()))
+		if (APGCharacterBase* InPawn = Cast<APGCharacterBase>(OtherActor))
 		{
-			APGCharacterBase* Enemy = Cast<APGCharacterBase>(OtherActor);
-			if (Enemy)
+			if (InPawn)
 			{
 				//传给GAs的事件数据
 				FGameplayEventData EventData;
 				EventData.Instigator = GetInstigator();
-				EventData.Target = Enemy;
+				EventData.Target = InPawn;
 				
 				//已经对该对象产生伤害
 				if (IsExist(InPawn))
@@ -52,6 +46,8 @@ void ARPGHirBox_ApplayGameEffect::HandleDamage(UPrimitiveComponent* OverlappedCo
 					return;
 				}
 
+				// 添加 唯一
+				AttackedTarget.AddUnique(InPawn);
 				//拿到一个cAs
 				if(URPGAbilitySystemComponent* InAbilitySystemComponent = InPawn->GetAbilitySystemComponent())
 				{
